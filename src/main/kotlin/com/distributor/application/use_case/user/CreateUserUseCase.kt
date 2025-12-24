@@ -25,11 +25,14 @@ class CreateUserUseCase(
         val role: Role
     )
 
-    data class Result(val user: User)
+    data class Result(
+        val user: User
+    )
 
     fun execute(command: Command): Result {
+
         // 1. Validate the user role.
-        if (!command.user.isRole(setOf(Role.ADMIN))) {
+        if (!command.user.isRole(Role.ADMIN)) {
             throw ErrorHandler(ErrorType.UNAUTHORIZED)
         }
 
@@ -41,6 +44,7 @@ class CreateUserUseCase(
 
         // 3. Create the new user.
         val newUser = User(
+            id = null,
             username = command.username,
             password = authHelper.hashPassword(command.password),
             role = command.role,
@@ -53,6 +57,8 @@ class CreateUserUseCase(
         val saved = userRepository.save(newUser)
 
         // 5. End of Use Case.
-        return Result(saved)
+        return Result(
+            user = saved
+        )
     }
 }

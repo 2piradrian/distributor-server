@@ -2,16 +2,36 @@ package com.distributor.domain.entity
 
 import java.util.Date
 
+
 class User(
-    val id: String? = null,
-    val username: String? = null,
-    val password: String? = null,
-    val role: Role? = null,
-    val status: Status? = null,
-    val createdAt: Date? = null,
-    val updatedAt: Date? = null
+    val id: String?,
+    var username: String,
+    var password: String,
+    var role: Role,
+    var status: Status,
+    val createdAt: Date,
+    var updatedAt: Date
 ) {
-    fun isRole(roles: Set<Role>): Boolean {
-        return roles.contains(this.role)
+
+    fun isRole(vararg roles: Role): Boolean {
+        return roles.contains(role)
+    }
+
+    fun isActive(): Boolean {
+        return status == Status.ACTIVE
+    }
+
+    fun update(
+        username: String,
+        hashedPassword: String,
+        role: Role,
+        status: Status
+    ) {
+        this.username = username
+        this.password = hashedPassword
+        this.role = role
+        this.status = status
+        this.updatedAt = Date()
     }
 }
+

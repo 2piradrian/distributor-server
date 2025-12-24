@@ -17,6 +17,7 @@ class UpdateUserUseCase(
     private val authHelper: AuthHelper,
     private val userRepository: UserRepositoryI
 ) {
+
     data class Command(
         val user: User,
         val userId: String,
@@ -25,29 +26,42 @@ class UpdateUserUseCase(
         val role: Role,
         val status: Status
     )
-    data class Result(val user: User)
+
+    data class Result(
+        val user: User
+    )
 
     fun execute(command: Command): Result {
-        if (!command.user.isRole(setOf(Role.ADMIN))) {
+
+        // 1. Validate the user role.
+        if (!command.user.isRole(Role.ADMIN)) {
             throw ErrorHandler(ErrorType.UNAUTHORIZED)
         }
 
-        val existingUser = userRepository.getById(command.userId)
+        // 2. Get the existing user.
+        val existingUser = this.userRepository.getById(command.userId)
             ?: throw ErrorHandler(ErrorType.USER_NOT_FOUND)
 
-        val usernameCheck = userRepository.getByUsername(command.username)
+        // 3. Check if the username already exists.
+        val usernameCheck = this.userRepository.getByUsername(command.username)
         if (usernameCheck != null && usernameCheck.id != command.userId) {
             throw ErrorHandler(ErrorType.USERNAME_ALREADY_EXISTS)
         }
 
-        val updatedUser = existingUser.copy(
+        // 4. Update the user.
+        existingUser.update(
             username = command.username,
-            password = authHelper.hashPassword(command.password),
+            hashedPassword = authHelper.hashPassword(command.password),
             role = command.role,
             status = command.status,
-            updatedAt = Date()
         )
 
-        return Result(userRepository.update(updatedUser))
+        // 5. Save the user.
+        val saved = this.userRepository.update(existingUser)
+
+        // 6. End of Use Case.
+        return Result(
+            user = saved
+        )
     }
 }

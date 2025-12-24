@@ -16,12 +16,18 @@ class AuthenticateUserUseCase(
     private val userRepository: UserRepositoryI
 ) {
 
-    data class Command(val token: String)
-    data class Result(val user: User)
+    data class Command(
+        val token: String
+    )
+
+    data class Result(
+        val user: User
+    )
 
     fun execute(command: Command): Result {
+
         // 1. Validate the token.
-        val sessionToken = authHelper.validateToken(command.token)
+        val sessionToken = this.authHelper.validateToken(command.token)
             ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         // 2. Get the user from the token subject.
@@ -35,6 +41,8 @@ class AuthenticateUserUseCase(
         }
 
         // 4. End of Use Case.
-        return Result(user)
+        return Result(
+            user = user
+        )
     }
 }

@@ -16,10 +16,17 @@ class LoginUserUseCase(
     private val userRepository: UserRepositoryI
 ) {
 
-    data class Command(val username: String, val password: String)
-    data class Result(val token: Token)
+    data class Command(
+        val username: String,
+        val password: String
+    )
+
+    data class Result(
+        val token: Token
+    )
 
     fun execute(command: Command): Result {
+
         // 1. Get the user by username.
         val user = userRepository.getByUsername(command.username)
             ?: throw ErrorHandler(ErrorType.USER_NOT_FOUND)
@@ -38,6 +45,8 @@ class LoginUserUseCase(
         val token = authHelper.createToken(user)
 
         // 5. End of Use Case.
-        return Result(token)
+        return Result(
+            token = token
+        )
     }
 }

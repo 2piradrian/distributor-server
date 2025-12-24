@@ -13,13 +13,28 @@ import org.springframework.transaction.annotation.Transactional
 class GetAllUsersUseCase(
     private val userRepository: UserRepositoryI
 ) {
-    data class Command(val user: User)
-    data class Result(val users: List<User>)
+
+    data class Command(
+        val user: User
+    )
+
+    data class Result(
+        val users: List<User>
+    )
 
     fun execute(command: Command): Result {
-        if (!command.user.isRole(setOf(Role.ADMIN))) {
+
+        // 1. Validate the user role.
+        if (!command.user.isRole(Role.ADMIN)) {
             throw ErrorHandler(ErrorType.UNAUTHORIZED)
         }
-        return Result(userRepository.getAll())
+
+        // 2. Get all users.
+        val users = userRepository.getAll()
+
+        // 3. End of Use Case.
+        return Result(
+            users = users
+        )
     }
 }

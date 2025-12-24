@@ -13,19 +13,32 @@ import org.springframework.transaction.annotation.Transactional
 class GetUserByIdUseCase(
     private val userRepository: UserRepositoryI
 ) {
-    data class Command(val user: User, val userId: String)
-    data class Result(val user: User)
+
+    data class Command(
+        val user: User,
+        val userId: String
+    )
+
+    data class Result(
+        val user: User
+    )
 
     fun execute(command: Command): Result {
-        if (!command.user.isRole(setOf(Role.ADMIN))) {
+
+        // 1. Validate the user role or identity.
+        if (!command.user.isRole(Role.ADMIN)) {
              if (command.user.id != command.userId) {
                  throw ErrorHandler(ErrorType.UNAUTHORIZED)
              }
         }
-        
+
+        // 2. Get the user by id.
         val user = userRepository.getById(command.userId)
             ?: throw ErrorHandler(ErrorType.USER_NOT_FOUND)
-            
-        return Result(user)
+
+        // 3. End of Use Case.
+        return Result(
+            user = user
+        )
     }
 }

@@ -26,8 +26,6 @@ class UserRepository(
     }
 
     override fun save(user: User): User {
-        // We can safely assert !! here because toModel returns null only if input is null, 
-        // and we pass a non-null User.
         val userModel = UserEntityMapper.toModel(user)!!
         val saved = userRepository.save(userModel)
         return UserEntityMapper.toDomain(saved)!!

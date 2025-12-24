@@ -3,31 +3,36 @@ package com.distributor.datasource.postgres.model
 import com.distributor.domain.entity.Role
 import com.distributor.domain.entity.Status
 import jakarta.persistence.*
+import java.time.Instant
 import java.util.Date
+import java.util.UUID
 
 @Entity
 @Table(name = "users")
-data class UserModel(
+class UserModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(unique = true, nullable = false, updatable = false)
-    val id: String? = null,
+    var id: String? = null
 
-    @Column(unique = true)
-    val username: String? = null,
+    @Column(nullable = false, unique = true)
+    lateinit var username: String
 
-    @Column
-    val password: String? = null,
-
-    @Enumerated(EnumType.STRING)
-    val role: Role? = null,
+    @Column(nullable = false)
+    lateinit var password: String
 
     @Enumerated(EnumType.STRING)
-    val status: Status? = null,
+    @Column(nullable = false)
+    lateinit var role: Role
 
-    @Column
-    val createdAt: Date? = null,
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    lateinit var status: Status
 
-    @Column
-    val updatedAt: Date? = null
-)
+    @Column(nullable = false, updatable = false)
+    var createdAt: Date = Date()
+
+    @Column(nullable = false)
+    var updatedAt: Date = Date()
+}

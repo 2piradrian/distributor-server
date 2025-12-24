@@ -19,20 +19,33 @@ class CreateAdminUserUseCase(
     private val secretKeyHelper: SecretKeyHelper,
     private val userRepository: UserRepositoryI
 ) {
-    data class Command(val secret: String, val username: String, val password: String)
-    data class Result(val user: User)
+
+    data class Command(
+        val secret: String,
+        val username: String,
+        val password: String
+    )
+
+    data class Result(
+        val user: User
+    )
 
     fun execute(command: Command): Result {
+
+        // 1. Validate the secret key.
         if (!secretKeyHelper.isValid(command.secret)) {
             throw ErrorHandler(ErrorType.UNAUTHORIZED)
         }
-        
-        val usernameCheck = userRepository.getByUsername(command.username)
+
+        // 2. Check if the username already exists.
+        val usernameCheck = this.userRepository.getByUsername(command.username)
         if (usernameCheck != null) {
             throw ErrorHandler(ErrorType.USERNAME_ALREADY_EXISTS)
         }
 
+        // 3. Create the new user.
         val newUser = User(
+            id = null,
             username = command.username,
             password = authHelper.hashPassword(command.password),
             role = Role.ADMIN,
@@ -41,7 +54,12 @@ class CreateAdminUserUseCase(
             updatedAt = Date()
         )
 
+        // 4. Save the user.
         val saved = userRepository.save(newUser)
-        return Result(saved)
+
+        // 5. End of Use Case.
+        return Result(
+            user = saved
+        )
     }
 }
