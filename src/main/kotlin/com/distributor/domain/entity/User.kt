@@ -2,7 +2,7 @@ package com.distributor.domain.entity
 
 import java.util.Date
 
-data class User(
+class User(
     val id: String? = null,
     val username: String? = null,
     val password: String? = null,

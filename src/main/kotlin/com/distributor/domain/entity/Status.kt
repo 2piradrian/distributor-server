@@ -5,7 +5,9 @@ import com.distributor.domain.error.ErrorType
 import com.fasterxml.jackson.annotation.JsonFormat
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-enum class Status(val displayName: String) {
+enum class Status(
+    val displayName: String
+) {
 
     ACTIVE("Activo"),
     INACTIVE("Inactivo");
@@ -14,7 +16,8 @@ enum class Status(val displayName: String) {
         fun fromString(value: String): Status {
             return try {
                 valueOf(value.trim().uppercase().replace(" ", "_"))
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 throw ErrorHandler(ErrorType.INVALID_STATUS)
             }
         }
@@ -27,11 +30,4 @@ enum class Status(val displayName: String) {
         )
     }
 
-    fun getValue(): String {
-        return this.name
-    }
-
-    fun getName(): String {
-        return this.displayName
-    }
 }
