@@ -1,0 +1,24 @@
+services:
+
+    distributor-db:
+        image: postgres:15.3
+        restart: always
+        environment:
+            POSTGRES_DB: distributor-db
+            POSTGRES_USER: develop
+            POSTGRES_PASSWORD: develop
+            POSTGRES_HOST_AUTH_METHOD: trust
+        volumes:
+            - ./database/distributor-db:/var/lib/postgresql/data
+        ports:
+            - "5432:5432"
+        networks:
+            - microservices-net
+        logging:
+            driver: json-file
+            options:
+                max-size: "5m"
+
+networks:
+    microservices-net:
+        driver: bridge

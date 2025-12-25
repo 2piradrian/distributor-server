@@ -1,0 +1,51 @@
+@startuml
+skin rose
+
+title Get All Users
+
+actor Client
+boundary "UserController" as Controller
+control "UserService" as Service
+participant "<<UseCase>> \n AuthenticateUserUseCase" as AuthUseCase
+participant "<<UseCase>> \n GetAllUsersUseCase" as UseCase
+entity "actor \n :User" as Actor
+collections "<<Repository>> \n UserRepository" as UserRepository
+
+Client -> Controller: GET /api/users
+activate Controller
+
+Controller -> Service: getAllUsers(request: GetAllUsersReq)
+activate Service
+
+Service -> AuthUseCase: execute(authCommand: Command)
+activate AuthUseCase
+AuthUseCase --> Service: authResult: Result
+deactivate AuthUseCase
+
+Service -> UseCase: execute(command: Command)
+activate UseCase
+
+note right of UseCase: 1. Validate the user role.
+UseCase -> Actor: isRole(roles: Set<Role>)
+activate Actor
+Actor --> UseCase: true
+deactivate Actor
+
+note right of UseCase: 2. Get all users.
+UseCase -> UserRepository: getAll()
+activate UserRepository
+UserRepository --> UseCase: users: List<User>
+deactivate UserRepository
+
+note right of UseCase: 3. End of Use Case.
+UseCase --> Service: result: Result
+deactivate UseCase
+
+Service --> Controller: response: GetAllUsersRes
+deactivate Service
+
+Controller --> Client: 200 OK (response: GetAllUsersRes)
+deactivate Controller
+
+hide footbox
+@enduml

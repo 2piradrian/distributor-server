@@ -1,0 +1,57 @@
+@startuml
+skin rose
+
+title Authenticate User
+
+actor Client
+boundary "UserController" as Controller
+control "UserService" as Service
+participant "<<UseCase>>\nAuthenticateUserUseCase" as UseCase
+participant "<<Helper>>\nAuthHelper" as Auth
+collections "<<Repository>>\nUserRepository" as UserRepository
+entity "user\n:User" as User
+
+Client -> Controller: GET /api/users/authenticate
+activate Controller
+
+Controller -> Service: authenticate(request: AuthenticateUserReq)
+activate Service
+
+Service -> UseCase: execute(command: Command)
+activate UseCase
+
+note right of UseCase: 1. Validate the token.
+UseCase -> Auth: validateToken(token: String)
+activate Auth
+Auth --> UseCase: sessionToken: String
+deactivate Auth
+
+note right of UseCase: 2. Get the user from the token subject.
+UseCase -> Auth: getSubject(sessionToken: String)
+activate Auth
+Auth --> UseCase: subject: String
+deactivate Auth
+
+UseCase -> UserRepository: getById(id: String)
+activate UserRepository
+UserRepository --> UseCase: user: User
+deactivate UserRepository
+
+note right of UseCase: 3. Check if the user is active.
+UseCase -> User: isActive()
+activate User
+User --> UseCase: true
+deactivate User
+
+note right of UseCase: 4. End of Use Case.
+UseCase --> Service: result: Result
+deactivate UseCase
+
+Service --> Controller: response: AuthenticateUserRes
+deactivate Service
+
+Controller --> Client: 200 OK (response: AuthenticateUserRes)
+deactivate Controller
+
+hide footbox
+@enduml

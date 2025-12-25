@@ -1,0 +1,64 @@
+@startuml
+skin rose
+
+title Create User
+
+actor Client
+boundary "UserController" as Controller
+control "UserService" as Service
+participant "<<UseCase>> \n AuthenticateUserUseCase" as AuthUseCase
+participant "<<UseCase>> \n CreateUserUseCase" as UseCase
+entity "actor \n :User" as Actor
+collections "<<Repository>> \n UserRepository" as UserRepository
+participant "<<Helper>> \n AuthHelper" as Auth
+
+Client -> Controller: POST /api/users
+activate Controller
+
+Controller -> Service: createUser(request: CreateUserReq)
+activate Service
+
+Service -> AuthUseCase: execute(authCommand: Command)
+activate AuthUseCase
+AuthUseCase --> Service: authResult: Result
+deactivate AuthUseCase
+
+Service -> UseCase: execute(command: Command)
+activate UseCase
+
+note right of UseCase: 1. Validate the user role.
+UseCase -> Actor: isRole(roles: Set<Role>)
+activate Actor
+Actor --> UseCase: true
+deactivate Actor
+
+note right of UseCase: 2. Check if the username already exists.
+UseCase -> UserRepository: getByUsername(username: String)
+activate UserRepository
+UserRepository --> UseCase: null
+deactivate UserRepository
+
+note right of UseCase: 3. Create the new user.
+UseCase -> Auth: hashPassword(password: String)
+activate Auth
+Auth --> UseCase: hashedPassword: String
+deactivate Auth
+
+note right of UseCase: 4. Save the user.
+UseCase -> UserRepository: save(user: User)
+activate UserRepository
+UserRepository --> UseCase: saved: User
+deactivate UserRepository
+
+note right of UseCase: 5. End of Use Case.
+UseCase --> Service: result: Result
+deactivate UseCase
+
+Service --> Controller: response: CreateUserRes
+deactivate Service
+
+Controller --> Client: 200 OK (response: CreateUserRes)
+deactivate Controller
+
+hide footbox
+@enduml

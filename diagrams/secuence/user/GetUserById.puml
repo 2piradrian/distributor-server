@@ -1,0 +1,47 @@
+@startuml
+skin rose
+
+title Get User By Id
+
+actor Client
+boundary "UserController" as Controller
+control "UserService" as Service
+participant "<<UseCase>> \n AuthenticateUserUseCase" as AuthUseCase
+participant "<<UseCase>> \n GetUserByIdUseCase" as UseCase
+collections "<<Repository>> \n UserRepository" as UserRepository
+
+Client -> Controller: GET /api/users/{id}
+activate Controller
+
+Controller -> Service: getUserById(request: GetUserByIdReq)
+activate Service
+
+Service -> AuthUseCase: execute(authCommand: Command)
+activate AuthUseCase
+AuthUseCase --> Service: authResult: Result
+deactivate AuthUseCase
+
+Service -> UseCase: execute(command: Command)
+activate UseCase
+
+note right of UseCase: 1. Validate the user role.
+' TODO: Validate the user role.
+
+note right of UseCase: 2. Get the user by ID.
+UseCase -> UserRepository: getById(id: String)
+activate UserRepository
+UserRepository --> UseCase: user: User
+deactivate UserRepository
+
+note right of UseCase: 3. End of Use Case.
+UseCase --> Service: result: Result
+deactivate UseCase
+
+Service --> Controller: response: GetUserByIdRes
+deactivate Service
+
+Controller --> Client: 200 OK (response: GetUserByIdRes)
+deactivate Controller
+
+hide footbox
+@enduml

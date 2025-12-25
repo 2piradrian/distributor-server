@@ -1,0 +1,58 @@
+@startuml
+skin rose
+
+title Login User
+
+actor Client
+boundary "UserController" as Controller
+control "UserService" as Service
+participant "<<UseCase>> \n LoginUserUseCase" as UseCase
+collections "<<Repository>> \n UserRepository" as UserRepository
+entity "user\n:User" as User
+participant "<<Helper>> \n AuthHelper" as Auth
+
+Client -> Controller: POST /api/users/login
+activate Controller
+
+Controller -> Service: login(request: LoginUserReq)
+activate Service
+
+Service -> UseCase: execute(command: Command)
+activate UseCase
+
+note right of UseCase: 1. Get the user by username.
+UseCase -> UserRepository: getByUsername(username: String)
+activate UserRepository
+UserRepository --> UseCase: user: User
+deactivate UserRepository
+
+note right of UseCase: 2. Check if the user is active.
+UseCase -> User: isActive()
+activate User
+User --> UseCase: true
+deactivate User
+
+note right of UseCase: 3. Validate the password.
+UseCase -> Auth: validatePassword(user: User, password: String)
+activate Auth
+Auth --> UseCase: true
+deactivate Auth
+
+note right of UseCase: 4. Create a token.
+UseCase -> Auth: createToken(user: User)
+activate Auth
+Auth --> UseCase: token: Token
+deactivate Auth
+
+note right of UseCase: 5. End of Use Case.
+UseCase --> Service: result: Result
+deactivate UseCase
+
+Service --> Controller: response: LoginUserRes
+deactivate Service
+
+Controller --> Client: 200 OK (response: LoginUserRes)
+deactivate Controller
+
+hide footbox
+@enduml

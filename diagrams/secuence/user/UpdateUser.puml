@@ -1,0 +1,106 @@
+@startuml
+skin rose
+
+title Update User
+
+actor Client
+boundary "UserController" as Controller
+control "UserService" as Service
+participant "<<UseCase>> \n AuthenticateUserUseCase" as AuthUseCase
+participant "<<UseCase>> \n UpdateUserUseCase" as UseCase
+entity "actor \n :User" as Actor
+collections "<<Repository>> \n UserRepository" as UserRepository
+entity "userToUpdate \n :User" as UserToUpdate
+participant "<<Helper>> \n AuthHelper" as Auth
+
+Client -> Controller: PUT /api/users/{id}
+activate Controller
+
+Controller -> Service: updateUser(request: UpdateUserReq)
+activate Service
+
+Service -> AuthUseCase: execute(authCommand: Command)
+activate AuthUseCase
+AuthUseCase --> Service: authResult: Result
+deactivate AuthUseCase
+
+Service -> UseCase: execute(command: Command)
+activate UseCase
+
+note right of UseCase: 1. Validate the user role.
+UseCase -> Actor: isRole(roles: Set<Role>)
+activate Actor
+Actor --> UseCase: true
+deactivate Actor
+
+note right of UseCase: 2. Get the user to update.
+UseCase -> UserRepository: getById(id: String)
+activate UserRepository
+UserRepository --> UseCase: userToUpdate: User
+deactivate UserRepository
+
+note right of UseCase: 3. Update username if changed and check availability.
+UseCase -> UserToUpdate: getUsername()
+activate UserToUpdate
+UserToUpdate --> UseCase: username: String
+deactivate UserToUpdate
+
+alt username != command.username
+    UseCase -> UserRepository: getByUsername(username: String)
+    activate UserRepository
+    UserRepository --> UseCase: null
+    deactivate UserRepository
+
+    UseCase -> UserToUpdate: setUsername(username: String)
+    activate UserToUpdate
+    UserToUpdate --> UseCase: void
+    deactivate UserToUpdate
+end
+
+note right of UseCase: 4. Update password if provided.
+alt password provided
+    UseCase -> Auth: hashPassword(password: String)
+    activate Auth
+    Auth --> UseCase: hashedPassword: String
+    deactivate Auth
+
+    UseCase -> UserToUpdate: setPassword(password: String)
+    activate UserToUpdate
+    UserToUpdate --> UseCase: void
+    deactivate UserToUpdate
+end
+
+note right of UseCase: 5. Update other fields.
+UseCase -> UserToUpdate: setRole(role: Role)
+activate UserToUpdate
+UserToUpdate --> UseCase: void
+deactivate UserToUpdate
+
+UseCase -> UserToUpdate: setStatus(status: Status)
+activate UserToUpdate
+UserToUpdate --> UseCase: void
+deactivate UserToUpdate
+
+UseCase -> UserToUpdate: setUpdatedAt(date: Date)
+activate UserToUpdate
+UserToUpdate --> UseCase: void
+deactivate UserToUpdate
+
+note right of UseCase: 6. Save the updated user.
+UseCase -> UserRepository: update(userToUpdate: User)
+activate UserRepository
+UserRepository --> UseCase: updatedUser: User
+deactivate UserRepository
+
+note right of UseCase: 7. End of Use Case.
+UseCase --> Service: result: Result
+deactivate UseCase
+
+Service --> Controller: response: UpdateUserRes
+deactivate Service
+
+Controller --> Client: 200 OK (response: UpdateUserRes)
+deactivate Controller
+
+hide footbox
+@enduml
