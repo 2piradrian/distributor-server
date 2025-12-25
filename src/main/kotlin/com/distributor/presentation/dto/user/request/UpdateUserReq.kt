@@ -20,13 +20,23 @@ data class UpdateUserReq(
             role: String?,
             status: String?
         ): UpdateUserReq {
+
             if (token.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
+
             if (id.isNullOrEmpty() || username.isNullOrEmpty() || password.isNullOrEmpty() || role.isNullOrEmpty() || status.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
             }
-            return UpdateUserReq(token, id, username, password, role, status)
+
+            return UpdateUserReq(
+                token,
+                id,
+                username,
+                password,
+                role,
+                status
+            )
         }
     }
 }

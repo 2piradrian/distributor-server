@@ -8,14 +8,23 @@ data class GetUserByIdReq(
     val id: String
 ) {
     companion object {
-        fun build(token: String?, id: String?): GetUserByIdReq {
+        fun build(
+            token: String?,
+            id: String?
+        ): GetUserByIdReq {
+
             if (token.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
+
             if (id.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
             }
-            return GetUserByIdReq(token, id)
+
+            return GetUserByIdReq(
+                token,
+                id
+            )
         }
     }
 }

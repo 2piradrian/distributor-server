@@ -2,7 +2,6 @@ package com.distributor.domain.entity
 
 import java.util.Date
 
-
 class User(
     val id: String?,
     var username: String,

@@ -5,11 +5,17 @@ import com.distributor.presentation.dto.user.request.GetAllUserReq
 import com.distributor.presentation.dto.user.response.GetAllUserRes
 
 object GetAllUserMapper {
+
     fun toResponse(users: List<User>): GetAllUserRes {
-        return GetAllUserRes(users)
+        return GetAllUserRes(
+            users = users
+        )
     }
 
     fun toRequest(token: String): GetAllUserReq {
-        return GetAllUserReq.build(token)
+        return GetAllUserReq.build(
+            token =  token
+        )
     }
+
 }

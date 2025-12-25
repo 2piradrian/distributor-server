@@ -7,11 +7,17 @@ data class AuthUserReq(
     val token: String
 ) {
     companion object {
-        fun build(token: String?): AuthUserReq {
+        fun build(
+            token: String?
+        ): AuthUserReq {
+
             if (token.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
-            return AuthUserReq(token)
+
+            return AuthUserReq(
+                token
+            )
         }
     }
 }

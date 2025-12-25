@@ -5,11 +5,18 @@ import com.distributor.presentation.dto.user.request.AuthUserReq
 import com.distributor.presentation.dto.user.response.AuthUserRes
 
 object AuthUserMapper {
+
     fun toResponse(user: User): AuthUserRes {
-        return AuthUserRes(user.id, user.username, user.role)
+        return AuthUserRes(
+            id = user.id!!,
+            username = user.username,
+            role = user.role
+        )
     }
 
     fun toRequest(token: String): AuthUserReq {
-        return AuthUserReq.build(token)
+        return AuthUserReq.build(
+            token = token
+        )
     }
 }

@@ -9,14 +9,25 @@ data class CreateAdminUserReq(
     val password: String
 ) {
     companion object {
-        fun build(secret: String?, username: String?, password: String?): CreateAdminUserReq {
+        fun build(
+            secret: String?,
+            username: String?,
+            password: String?
+        ): CreateAdminUserReq {
+
             if (secret.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
+
             if (username.isNullOrEmpty() || password.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
             }
-            return CreateAdminUserReq(secret, username, password)
+
+            return CreateAdminUserReq(
+                secret,
+                username,
+                password
+            )
         }
     }
 }

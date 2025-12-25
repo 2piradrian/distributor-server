@@ -3,6 +3,7 @@ package com.distributor.application.service
 import com.distributor.application.use_case.user.*
 import com.distributor.domain.entity.Role
 import com.distributor.domain.entity.Status
+import com.distributor.domain.entity.User
 import com.distributor.domain.error.ErrorHandler
 import com.distributor.domain.error.ErrorType
 import com.distributor.presentation.dto.user.mapper.*
@@ -23,77 +24,109 @@ class UserService(
     private val createAdmin: CreateAdminUserUseCase
 ) : UserServiceI {
 
-    override fun auth(token: String): com.distributor.domain.entity.User {
-        val result = authenticate.execute(AuthenticateUserUseCase.Command(token))
+    override fun auth(token: String): User {
+        val result = this.authenticate.execute(
+            command = AuthenticateUserUseCase.Command(
+                token = token
+            )
+        )
         return result.user
     }
 
     override fun auth(dto: AuthUserReq): AuthUserRes {
-        val result = authenticate.execute(AuthenticateUserUseCase.Command(dto.token))
-        return AuthUserMapper.toResponse(result.user)
+        val result = this.authenticate.execute(
+            command = AuthenticateUserUseCase.Command(
+                token = dto.token
+            )
+        )
+        return AuthUserMapper.toResponse(
+            user = result.user
+        )
     }
 
     override fun login(dto: LoginUserReq): LoginUserRes {
-        val result = login.execute(LoginUserUseCase.Command(dto.username, dto.password))
-        return LoginUserMapper.toResponse(result.token)
+        val result = this.login.execute(
+            command = LoginUserUseCase.Command(
+                username = dto.username,
+                password = dto.password
+            )
+        )
+        return LoginUserMapper.toResponse(
+            token = result.token
+        )
     }
 
     override fun create(dto: CreateUserReq): CreateUserRes {
-        val user = auth(dto.token)
+        val user = this.auth(dto.token)
         
-        val result = create.execute(
-            CreateUserUseCase.Command(
-                user,
-                dto.username,
-                dto.password,
-                Role.fromString(dto.role)
+        val result = this.create.execute(
+            command = CreateUserUseCase.Command(
+                user = user,
+                username = dto.username,
+                password = dto.password,
+                role = Role.fromString(dto.role)
             )
         )
-        return CreateUserMapper.toResponse(result.user.id)
+        return CreateUserMapper.toResponse(
+            id = result.user.id!!
+        )
     }
 
     override fun update(dto: UpdateUserReq): UpdateUserRes {
-        val user = auth(dto.token)
+        val user = this.auth(dto.token)
         
-        val result = update.execute(
-            UpdateUserUseCase.Command(
-                user,
-                dto.id,
-                dto.username,
-                dto.password,
-                Role.fromString(dto.role),
-                Status.fromString(dto.status)
+        val result = this.update.execute(
+            command = UpdateUserUseCase.Command(
+                user = user,
+                userId = dto.id,
+                username = dto.username,
+                password = dto.password,
+                role = Role.fromString(dto.role),
+                status = Status.fromString(dto.status)
             )
         )
-        return UpdateUserMapper.toResponse(result.user.id)
+        return UpdateUserMapper.toResponse(
+            id = result.user.id!!
+        )
     }
 
     override fun getById(dto: GetUserByIdReq): GetUserByIdRes {
-        val user = auth(dto.token)
+        val user = this.auth(dto.token)
         
-        val result = getById.execute(
-            GetUserByIdUseCase.Command(user, dto.id)
+        val result = this.getById.execute(
+            command = GetUserByIdUseCase.Command(
+                user = user,
+                userId = dto.id
+            )
         )
-        return GetUserByIdMapper.toResponse(result.user)
+        return GetUserByIdMapper.toResponse(
+            user = result.user
+        )
     }
 
     override fun createAdmin(dto: CreateAdminUserReq): CreateAdminUserRes {
-        val result = createAdmin.execute(
-            CreateAdminUserUseCase.Command(
-                dto.secret,
-                dto.username,
-                dto.password
+        val result = this.createAdmin.execute(
+            command = CreateAdminUserUseCase.Command(
+                secret = dto.secret,
+                username = dto.username,
+                password = dto.password
             )
         )
-        return CreateAdminUserMapper.toResponse(result.user)
+        return CreateAdminUserMapper.toResponse(
+            user = result.user
+        )
     }
 
     override fun getAllUsers(dto: GetAllUserReq): GetAllUserRes {
-        val user = auth(dto.token)
+        val user = this.auth(dto.token)
         
-        val result = getAll.execute(
-            GetAllUsersUseCase.Command(user)
+        val result = this.getAll.execute(
+            command = GetAllUsersUseCase.Command(
+                user = user
+            )
         )
-        return GetAllUserMapper.toResponse(result.users)
+        return GetAllUserMapper.toResponse(
+            users = result.users
+        )
     }
 }
