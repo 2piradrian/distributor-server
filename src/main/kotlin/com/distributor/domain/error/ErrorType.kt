@@ -11,9 +11,11 @@ enum class ErrorType(val message: String, val httpCode: Int) {
     INVALID_STATUS("Invalid Status", 400),
 
     PRODUCT_ALREADY_EXISTS("Product already exists", 400),
+    CATEGORY_ALREADY_EXISTS("Category already exists", 400),
     USERNAME_ALREADY_EXISTS("Username already exists", 400),
 
     USER_NOT_FOUND("User not found", 404),
+    CATEGORY_NOT_FOUND("Category not found", 404),
 
     INTERNAL_ERROR("Internal error", 500),
 }
