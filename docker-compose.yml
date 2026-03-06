@@ -1,15 +1,14 @@
 services:
 
     distributor-db:
-        image: postgres:15.3
+        image: postgres:18.2
         restart: always
         environment:
             POSTGRES_DB: distributor-db
             POSTGRES_USER: develop
             POSTGRES_PASSWORD: develop
-            POSTGRES_HOST_AUTH_METHOD: trust
         volumes:
-            - ./database/distributor-db:/var/lib/postgresql/data
+            - ./database/distributor-db:/var/lib/postgresql
         ports:
             - "5432:5432"
         networks:
