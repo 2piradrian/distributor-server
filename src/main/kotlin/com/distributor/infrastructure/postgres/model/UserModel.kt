@@ -1,4 +1,4 @@
-package com.distributor.datasource.postgres.model
+package com.distributor.infrastructure.postgres.model
 
 import com.distributor.domain.entity.Role
 import com.distributor.domain.entity.Status

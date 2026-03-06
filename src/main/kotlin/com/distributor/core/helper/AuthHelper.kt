@@ -12,7 +12,7 @@ class AuthHelper(
 ) {
 
     fun hashPassword(password: String): String {
-        return passwordEncoder.encode(password)
+        return passwordEncoder.encode(password)!!
     }
 
     fun validatePassword(user: User, password: String): Boolean {
@@ -37,10 +37,12 @@ class AuthHelper(
         return try {
             if (jwtHelper.validateToken(tokenValue)) {
                 tokenValue
-            } else {
+            }
+            else {
                 null
             }
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             null
         }
     }

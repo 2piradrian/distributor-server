@@ -5,11 +5,11 @@ import java.util.Date
 class User(
     val id: String?,
     var username: String,
-    var password: String,
+    var password: String?,
     var role: Role,
     var status: Status,
-    val createdAt: Date,
-    var updatedAt: Date
+    val createdAt: Date?,
+    var updatedAt: Date?
 ) {
 
     fun isRole(vararg roles: Role): Boolean {
