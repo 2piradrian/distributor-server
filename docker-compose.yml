@@ -1,14 +1,14 @@
 services:
 
-    distributor-db:
+    ecommerce-db:
         image: postgres:18.2
         restart: always
         environment:
-            POSTGRES_DB: distributor-db
+            POSTGRES_DB: ecommerce-db
             POSTGRES_USER: develop
             POSTGRES_PASSWORD: develop
         volumes:
-            - ./database/distributor-db:/var/lib/postgresql
+            - ./database/ecommerce-db:/var/lib/postgresql
         ports:
             - "5432:5432"
         networks:

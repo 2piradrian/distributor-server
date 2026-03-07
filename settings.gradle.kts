@@ -1,1 +1,1 @@
-rootProject.name = "distributor"
+rootProject.name = "ecommerce"
