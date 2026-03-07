@@ -19,7 +19,11 @@ data class UpdateCategoryReq(
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
 
-            if (id.isNullOrEmpty() || name.isNullOrEmpty()) {
+            if (id.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (name.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
             }
 

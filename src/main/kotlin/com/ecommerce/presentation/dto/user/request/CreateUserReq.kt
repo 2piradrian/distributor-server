@@ -21,7 +21,15 @@ data class CreateUserReq(
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
 
-            if (username.isNullOrEmpty() || password.isNullOrEmpty() || role.isNullOrEmpty()) {
+            if (username.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (password.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (role.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
             }
 

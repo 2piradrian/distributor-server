@@ -19,7 +19,11 @@ data class CreateAdminUserReq(
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
 
-            if (username.isNullOrEmpty() || password.isNullOrEmpty()) {
+            if (username.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (password.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
             }
 

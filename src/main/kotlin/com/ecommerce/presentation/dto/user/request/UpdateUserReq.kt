@@ -25,7 +25,23 @@ data class UpdateUserReq(
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
 
-            if (id.isNullOrEmpty() || username.isNullOrEmpty() || password.isNullOrEmpty() || role.isNullOrEmpty() || status.isNullOrEmpty()) {
+            if (id.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (username.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (password.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (role.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (status.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
             }
 
