@@ -1,0 +1,22 @@
+package com.ecommerce.presentation.dto.product.mapper
+
+import com.ecommerce.presentation.dto.product.request.CreateProductReq
+import com.ecommerce.presentation.dto.product.response.CreateProductRes
+
+object CreateProductMapper {
+
+    fun toRequest(token: String, payload: Map<String, Any>): CreateProductReq {
+        return CreateProductReq.build(
+            token = token,
+            name = payload["name"] as? String,
+            description = payload["description"] as? String,
+            price = (payload["price"] as? Number)?.toDouble(),
+            stock = (payload["stock"] as? Number)?.toInt(),
+            categoryId = payload["categoryId"] as? String
+        )
+    }
+
+    fun toResponse(id: String): CreateProductRes {
+        return CreateProductRes(id)
+    }
+}

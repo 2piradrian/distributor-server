@@ -14,41 +14,41 @@ class CategoryRepositoryAdapter(
 ) : CategoryRepositoryI {
 
     override fun getById(id: String): Category? {
-        val model = categoryRepository.findFullById(id).orElse(null)
+        val model = this.categoryRepository.findFullById(id).orElse(null)
         return CategoryEntityMapper.toDomain(model)
     }
 
     override fun getBasicById(id: String): Category? {
-        val model = categoryRepository.findBasicById(id).orElse(null)
+        val model = this.categoryRepository.findBasicById(id).orElse(null)
         return CategoryEntityMapper.toDomain(model)
     }
 
     override fun getByName(name: String): Category? {
-        val model = categoryRepository.findFullByName(name).orElse(null)
+        val model = this.categoryRepository.findFullByName(name).orElse(null)
         return CategoryEntityMapper.toDomain(model)
     }
 
     override fun getAll(): List<Category> {
-        val models = categoryRepository.findAllBy(CategoryFullProjection::class.java)
+        val models = this.categoryRepository.findAllBy(CategoryFullProjection::class.java)
         return CategoryEntityMapper.toDomain(models, CategoryEntityMapper::toDomain)
     }
 
     override fun getAllBasic(): List<Category> {
-        val models = categoryRepository.findAllBy(CategoryBasicProjection::class.java)
+        val models = this.categoryRepository.findAllBy(CategoryBasicProjection::class.java)
         return CategoryEntityMapper.toDomain(models, CategoryEntityMapper::toDomain)
     }
 
     override fun save(category: Category): Category {
         val categoryModel = CategoryEntityMapper.toModel(category)!!
-        val saved = categoryRepository.save(categoryModel)
+        val saved = this.categoryRepository.save(categoryModel)
         return CategoryEntityMapper.toDomain(saved)!!
     }
 
     override fun update(category: Category): Category {
-        return save(category)
+        return this.save(category)
     }
 
     override fun delete(id: String) {
-        categoryRepository.deleteById(id)
+        this.categoryRepository.deleteById(id)
     }
 }

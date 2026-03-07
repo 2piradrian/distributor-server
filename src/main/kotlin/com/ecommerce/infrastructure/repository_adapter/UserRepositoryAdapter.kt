@@ -14,42 +14,42 @@ class UserRepositoryAdapter(
 ) : UserRepositoryI {
 
     override fun getById(userId: String): User? {
-        val model = userRepository.findFullById(userId).orElse(null)
+        val model = this.userRepository.findFullById(userId).orElse(null)
         return UserEntityMapper.toDomain(model)
     }
 
     override fun getBasicById(userId: String): User? {
-        val model = userRepository.findBasicById(userId).orElse(null)
+        val model = this.userRepository.findBasicById(userId).orElse(null)
         return UserEntityMapper.toDomain(model)
     }
 
     override fun getByUsername(username: String): User? {
-        val model = userRepository.findFullByUsername(username).orElse(null)
+        val model = this.userRepository.findFullByUsername(username).orElse(null)
         return UserEntityMapper.toDomain(model)
     }
 
     override fun getBasicByUsername(username: String): User? {
-        val model = userRepository.findBasicByUsername(username).orElse(null)
+        val model = this.userRepository.findBasicByUsername(username).orElse(null)
         return UserEntityMapper.toDomain(model)
     }
 
     override fun getAll(): List<User> {
-        val models = userRepository.findAllBy(UserFullProjection::class.java)
+        val models = this.userRepository.findAllBy(UserFullProjection::class.java)
         return UserEntityMapper.toDomain(models, UserEntityMapper::toDomain)
     }
 
     override fun getAllBasic(): List<User> {
-        val models = userRepository.findAllBy(UserBasicProjection::class.java)
+        val models = this.userRepository.findAllBy(UserBasicProjection::class.java)
         return UserEntityMapper.toDomain(models, UserEntityMapper::toDomain)
     }
 
     override fun save(user: User): User {
         val userModel = UserEntityMapper.toModel(user)!!
-        val saved = userRepository.save(userModel)
+        val saved = this.userRepository.save(userModel)
         return UserEntityMapper.toDomain(saved)!!
     }
 
     override fun update(user: User): User {
-        return save(user)
+        return this.save(user)
     }
 }

@@ -16,6 +16,7 @@ enum class ErrorType(val message: String, val httpCode: Int) {
 
     USER_NOT_FOUND("User not found", 404),
     CATEGORY_NOT_FOUND("Category not found", 404),
+    PRODUCT_NOT_FOUND("Product not found", 404),
 
     INTERNAL_ERROR("Internal error", 500),
 }
