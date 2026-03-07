@@ -36,6 +36,10 @@ object ProductSpecification {
                 filters.maxPrice?.let {
                     predicates.add(cb.le(root.get("price"), it))
                 }
+
+                filters.isVisible?.let {
+                    predicates.add(cb.equal(root.get<Boolean>("isVisible"), it))
+                }
             }
 
             if (predicates.isEmpty()) null else cb.and(*predicates.toTypedArray())

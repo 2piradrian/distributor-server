@@ -28,12 +28,16 @@ class GetProductByIdUseCase(
         // 1. Fetch the product.
         val product = if (command.user != null) {
             productRepository.getById(command.id)
-        }
-        else {
+        } else {
             productRepository.getPublicById(command.id)
         } ?: throw ErrorHandler(ErrorType.PRODUCT_NOT_FOUND)
 
-        // 2. End of Use Case.
+        // 2. Enforce visibility for public access.
+        if (command.user == null && !product.isVisible) {
+            throw ErrorHandler(ErrorType.PRODUCT_NOT_FOUND)
+        }
+
+        // 3. End of Use Case.
         return Result(
             product = product
         )

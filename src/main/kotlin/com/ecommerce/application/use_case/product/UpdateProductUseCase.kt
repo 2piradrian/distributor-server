@@ -24,7 +24,10 @@ class UpdateProductUseCase(
         val description: String,
         val price: Double,
         val stock: Int,
-        val categoryId: String
+        val categoryId: String,
+        val mainImage: String?,
+        val images: List<String>,
+        val isVisible: Boolean
     )
 
     data class Result(
@@ -39,12 +42,12 @@ class UpdateProductUseCase(
         }
 
         // 2. Check if the product exists.
-        val product = this.productRepository.getById(command.id)
+        val product = productRepository.getById(command.id)
             ?: throw ErrorHandler(ErrorType.PRODUCT_NOT_FOUND)
 
         // 3. Check if a product with the same name already exists (if name changed).
         if (product.name != command.name) {
-            val existingProduct = this.productRepository.getByName(command.name)
+            val existingProduct = productRepository.getByName(command.name)
             if (existingProduct != null) {
                 throw ErrorHandler(ErrorType.PRODUCT_ALREADY_EXISTS)
             }
@@ -60,7 +63,10 @@ class UpdateProductUseCase(
             description = command.description,
             price = command.price,
             stock = command.stock,
-            category = category
+            category = category,
+            mainImage = command.mainImage,
+            images = command.images,
+            isVisible = command.isVisible
         )
 
         // 6. Save the product.

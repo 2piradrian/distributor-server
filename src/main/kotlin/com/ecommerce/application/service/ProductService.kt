@@ -23,16 +23,19 @@ class ProductService(
 ) : ProductServiceI {
 
     override fun create(dto: CreateProductReq): CreateProductRes {
-        val user: User = this.userService.auth(dto.token)
+        val user: User = userService.auth(dto.token)
 
-        val result = this.create.execute(
+        val result = create.execute(
             command = CreateProductUseCase.Command(
                 user = user,
                 name = dto.name,
                 description = dto.description,
                 price = dto.price,
                 stock = dto.stock,
-                categoryId = dto.categoryId
+                categoryId = dto.categoryId,
+                mainImage = dto.mainImage,
+                images = dto.images,
+                isVisible = dto.isVisible
             )
         )
 
@@ -42,9 +45,9 @@ class ProductService(
     }
 
     override fun update(dto: UpdateProductReq): UpdateProductRes {
-        val user: User = this.userService.auth(dto.token)
+        val user: User = userService.auth(dto.token)
 
-        val result = this.update.execute(
+        val result = update.execute(
             command = UpdateProductUseCase.Command(
                 user = user,
                 id = dto.id,
@@ -52,7 +55,10 @@ class ProductService(
                 description = dto.description,
                 price = dto.price,
                 stock = dto.stock,
-                categoryId = dto.categoryId
+                categoryId = dto.categoryId,
+                mainImage = dto.mainImage,
+                images = dto.images,
+                isVisible = dto.isVisible
             )
         )
 

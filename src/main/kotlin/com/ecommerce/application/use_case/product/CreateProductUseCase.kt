@@ -24,7 +24,10 @@ class CreateProductUseCase(
         val description: String,
         val price: Double,
         val stock: Int,
-        val categoryId: String
+        val categoryId: String,
+        val mainImage: String?,
+        val images: List<String>,
+        val isVisible: Boolean
     )
 
     data class Result(
@@ -39,13 +42,13 @@ class CreateProductUseCase(
         }
 
         // 2. Check if a product with the same name already exists.
-        val existingProduct = this.productRepository.getByName(command.name)
+        val existingProduct = productRepository.getByName(command.name)
         if (existingProduct != null) {
             throw ErrorHandler(ErrorType.PRODUCT_ALREADY_EXISTS)
         }
 
         // 3. Validate category.
-        val category = this.categoryRepository.getById(command.categoryId)
+        val category = categoryRepository.getById(command.categoryId)
             ?: throw ErrorHandler(ErrorType.CATEGORY_NOT_FOUND)
 
         // 4. Create the new product.
@@ -56,6 +59,9 @@ class CreateProductUseCase(
             price = command.price,
             stock = command.stock,
             category = category,
+            mainImage = command.mainImage,
+            images = command.images,
+            isVisible = command.isVisible,
             createdAt = Date(),
             updatedAt = Date()
         )

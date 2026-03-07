@@ -9,7 +9,10 @@ data class CreateProductReq(
     val description: String,
     val price: Double,
     val stock: Int,
-    val categoryId: String
+    val categoryId: String,
+    val mainImage: String?,
+    val images: List<String>,
+    val isVisible: Boolean
 ) {
     companion object {
         fun build(
@@ -18,14 +21,37 @@ data class CreateProductReq(
             description: String?,
             price: Double?,
             stock: Int?,
-            categoryId: String?
+            categoryId: String?,
+            mainImage: String?,
+            images: List<String>?,
+            isVisible: Boolean?
         ): CreateProductReq {
 
             if (token.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.UNAUTHORIZED)
             }
 
-            if (name.isNullOrEmpty() || description.isNullOrEmpty() || categoryId.isNullOrEmpty() || price == null || stock == null) {
+            if (name.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (description.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (categoryId.isNullOrEmpty()) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (price == null) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (stock == null) {
+                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
+            }
+
+            if (isVisible == null) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
             }
 
@@ -35,7 +61,10 @@ data class CreateProductReq(
                 description,
                 price,
                 stock,
-                categoryId
+                categoryId,
+                mainImage,
+                images ?: emptyList(),
+                isVisible
             )
         }
     }

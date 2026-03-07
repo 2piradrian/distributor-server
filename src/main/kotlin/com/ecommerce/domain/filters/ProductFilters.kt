@@ -4,5 +4,6 @@ data class ProductFilters(
     val categoryId: String? = null,
     val minPrice: Double? = null,
     val maxPrice: Double? = null,
-    val name: String? = null
+    val name: String? = null,
+    val isVisible: Boolean? = null
 )

@@ -1,6 +1,6 @@
 package com.ecommerce.infrastructure.postgres.projections.product
 
-interface ProductBasicProjection {
+interface ProductPublicBasicProjection {
     fun getId(): String?
     fun getName(): String
     fun getPrice(): Double

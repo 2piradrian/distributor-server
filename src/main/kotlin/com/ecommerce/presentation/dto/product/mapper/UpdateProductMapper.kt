@@ -13,7 +13,10 @@ object UpdateProductMapper {
             description = payload["description"] as? String,
             price = (payload["price"] as? Number)?.toDouble(),
             stock = (payload["stock"] as? Number)?.toInt(),
-            categoryId = payload["categoryId"] as? String
+            categoryId = payload["categoryId"] as? String,
+            mainImage = payload["mainImage"] as? String,
+            images = (payload["images"] as? List<*>)?.filterIsInstance<String>(),
+            isVisible = payload["isVisible"] as? Boolean
         )
     }
 

@@ -21,6 +21,9 @@ object ProductEntityMapper {
                 price = it.price,
                 stock = it.stock,
                 category = CategoryEntityMapper.toDomain(it.category),
+                mainImage = it.mainImage,
+                images = it.images,
+                isVisible = it.isVisible,
                 createdAt = it.createdAt,
                 updatedAt = it.updatedAt
             )
@@ -38,6 +41,9 @@ object ProductEntityMapper {
                 price = it.getPrice(),
                 stock = it.getStock(),
                 category = CategoryEntityMapper.toDomain(it.getCategory()),
+                mainImage = it.getMainImage(),
+                images = it.getImages(),
+                isVisible = it.getIsVisible(),
                 createdAt = it.getCreatedAt(),
                 updatedAt = it.getUpdatedAt()
             )
@@ -53,6 +59,9 @@ object ProductEntityMapper {
                 price = it.getPrice(),
                 stock = it.getStock(),
                 category = null,
+                mainImage = it.getMainImage(),
+                images = emptyList(),
+                isVisible = it.getIsVisible(),
                 createdAt = null,
                 updatedAt = null
             )
@@ -68,6 +77,9 @@ object ProductEntityMapper {
                 price = it.getPrice(),
                 stock = it.getStock(),
                 category = CategoryEntityMapper.toDomain(it.getCategory()),
+                mainImage = it.getMainImage(),
+                images = it.getImages(),
+                isVisible = it.getIsVisible(),
                 createdAt = it.getCreatedAt(),
                 updatedAt = it.getUpdatedAt()
             )
@@ -83,6 +95,9 @@ object ProductEntityMapper {
                 price = it.getPrice(),
                 stock = it.getStock(),
                 category = null,
+                mainImage = it.getMainImage(),
+                images = emptyList(),
+                isVisible = it.getIsVisible(),
                 createdAt = null,
                 updatedAt = null
             )
@@ -100,6 +115,9 @@ object ProductEntityMapper {
                 price = it.price
                 stock = it.stock
                 category = CategoryEntityMapper.toModel(it.category)
+                mainImage = it.mainImage
+                images = it.images
+                isVisible = it.isVisible
                 createdAt = it.createdAt ?: Date()
                 updatedAt = it.updatedAt ?: Date()
             }

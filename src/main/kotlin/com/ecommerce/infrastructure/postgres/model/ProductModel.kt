@@ -28,6 +28,17 @@ class ProductModel {
     @JoinColumn(name = "category_id")
     var category: CategoryModel? = null
 
+    @Column(nullable = true)
+    var mainImage: String? = null
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "product_images", joinColumns = [JoinColumn(name = "product_id")])
+    @Column(name = "image_url")
+    var images: List<String> = mutableListOf()
+
+    @Column(nullable = false)
+    var isVisible: Boolean = true
+
     @Column(nullable = false, updatable = false)
     var createdAt: Date = Date()
 
