@@ -15,7 +15,7 @@ class GetProductByIdUseCase(
 ) {
 
     data class Command(
-        val user: User,
+        val user: User?,
         val id: String
     )
 
@@ -26,8 +26,12 @@ class GetProductByIdUseCase(
     fun execute(command: Command): Result {
 
         // 1. Fetch the product.
-        val product = productRepository.getById(command.id)
-            ?: throw ErrorHandler(ErrorType.PRODUCT_NOT_FOUND)
+        val product = if (command.user != null) {
+            productRepository.getById(command.id)
+        }
+        else {
+            productRepository.getPublicById(command.id)
+        } ?: throw ErrorHandler(ErrorType.PRODUCT_NOT_FOUND)
 
         // 2. End of Use Case.
         return Result(

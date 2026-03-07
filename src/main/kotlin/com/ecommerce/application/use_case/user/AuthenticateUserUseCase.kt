@@ -31,8 +31,8 @@ class AuthenticateUserUseCase(
             ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         // 2. Get the user from the token subject.
-        val subject = authHelper.getSubject(sessionToken)
-        val user = userRepository.getById(subject)
+        val subject = this.authHelper.getSubject(sessionToken)
+        val user = this.userRepository.getById(subject)
             ?: throw ErrorHandler(ErrorType.USER_NOT_FOUND)
 
         // 3. Check if the user is active.

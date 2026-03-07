@@ -27,10 +27,10 @@ class DeleteCategoryUseCase(
         }
 
         // 2. Fetch the category.
-        val category = categoryRepository.getBasicById(command.id)
+        val category = this.categoryRepository.getBasicById(command.id)
             ?: throw ErrorHandler(ErrorType.CATEGORY_NOT_FOUND)
 
         // 3. Delete the category.
-        categoryRepository.delete(command.id)
+        this.categoryRepository.delete(category.id!!)
     }
 }

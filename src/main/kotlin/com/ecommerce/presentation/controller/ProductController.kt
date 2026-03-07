@@ -11,6 +11,35 @@ class ProductController(
     private val service: ProductServiceI
 ) {
 
+    @GetMapping
+    fun getById(
+        @RequestHeader(value = "Authorization", required = false) token: String?,
+        @RequestParam id: String
+    ): ResponseEntity<*> {
+        val request = GetProductByIdMapper.toRequest(token, id)
+        val response = service.getById(request)
+        return ResponseEntity.ok(response)
+    }
+
+    @GetMapping("/all")
+    fun getAll(
+        @RequestHeader(value = "Authorization", required = false) token: String?,
+        @RequestParam(required = false) categoryId: String?,
+        @RequestParam(required = false) name: String?,
+        @RequestParam(required = false) minPrice: Double?,
+        @RequestParam(required = false) maxPrice: Double?
+    ): ResponseEntity<*> {
+        val request = GetAllProductsMapper.toRequest(
+            token = token,
+            categoryId = categoryId,
+            name = name,
+            minPrice = minPrice,
+            maxPrice = maxPrice
+        )
+        val response = service.getAll(request)
+        return ResponseEntity.ok(response)
+    }
+
     @PostMapping
     fun create(
         @RequestHeader("Authorization") token: String,
@@ -41,32 +70,4 @@ class ProductController(
         return ResponseEntity.noContent().build<Any>()
     }
 
-    @GetMapping
-    fun getById(
-        @RequestHeader("Authorization") token: String,
-        @RequestParam id: String
-    ): ResponseEntity<*> {
-        val request = GetProductByIdMapper.toRequest(token, id)
-        val response = service.getById(request)
-        return ResponseEntity.ok(response)
-    }
-
-    @GetMapping("/all")
-    fun getAll(
-        @RequestHeader("Authorization") token: String,
-        @RequestParam(required = false) categoryId: String?,
-        @RequestParam(required = false) name: String?,
-        @RequestParam(required = false) minPrice: Double?,
-        @RequestParam(required = false) maxPrice: Double?
-    ): ResponseEntity<*> {
-        val request = GetAllProductsMapper.toRequest(
-            token = token,
-            categoryId = categoryId,
-            name = name,
-            minPrice = minPrice,
-            maxPrice = maxPrice
-        )
-        val response = service.getAll(request)
-        return ResponseEntity.ok(response)
-    }
 }

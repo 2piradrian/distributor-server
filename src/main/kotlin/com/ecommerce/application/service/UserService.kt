@@ -23,12 +23,11 @@ class UserService(
 ) : UserServiceI {
 
     override fun auth(token: String): User {
-        val result = this.authenticate.execute(
+        return authenticate.execute(
             command = AuthenticateUserUseCase.Command(
                 token = token
             )
-        )
-        return result.user
+        ).user
     }
 
     override fun auth(dto: AuthUserReq): AuthUserRes {
@@ -40,6 +39,16 @@ class UserService(
         return AuthUserMapper.toResponse(
             user = result.user
         )
+    }
+
+    override fun tryAuth(token: String?): User? {
+        if (token.isNullOrEmpty()) return null
+        return try {
+            auth(token)
+        }
+        catch (e: Exception) {
+            null
+        }
     }
 
     override fun login(dto: LoginUserReq): LoginUserRes {

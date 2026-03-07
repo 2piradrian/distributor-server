@@ -15,7 +15,7 @@ class GetCategoryByIdUseCase(
 ) {
 
     data class Command(
-        val user: User,
+        val user: User?,
         val id: String
     )
 
@@ -25,13 +25,15 @@ class GetCategoryByIdUseCase(
 
     fun execute(command: Command): Result {
 
-        // 1. Validate the user role.
+        // 1. Fetch the category.
+        val category = if (command.user != null) {
+            this.categoryRepository.getById(command.id)
+        }
+        else {
+            this.categoryRepository.getPublicById(command.id)
+        } ?: throw ErrorHandler(ErrorType.CATEGORY_NOT_FOUND)
 
-        // 2. Fetch the category.
-        val category = categoryRepository.getById(command.id)
-            ?: throw ErrorHandler(ErrorType.CATEGORY_NOT_FOUND)
-
-        // 3. End of Use Case.
+        // 2. End of Use Case.
         return Result(
             category = category
         )

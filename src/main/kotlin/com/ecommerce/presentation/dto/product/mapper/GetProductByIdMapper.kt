@@ -6,7 +6,7 @@ import com.ecommerce.presentation.dto.product.response.GetProductByIdRes
 
 object GetProductByIdMapper {
 
-    fun toRequest(token: String, id: String): GetProductByIdReq {
+    fun toRequest(token: String?, id: String): GetProductByIdReq {
         return GetProductByIdReq.build(
             token = token,
             id = id

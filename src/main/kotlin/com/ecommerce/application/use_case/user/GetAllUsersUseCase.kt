@@ -30,7 +30,7 @@ class GetAllUsersUseCase(
         }
 
         // 2. Get all users.
-        val users = userRepository.getAll()
+        val users = this.userRepository.getAll()
 
         // 3. End of Use Case.
         return Result(

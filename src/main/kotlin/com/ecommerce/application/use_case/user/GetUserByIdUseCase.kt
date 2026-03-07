@@ -33,7 +33,7 @@ class GetUserByIdUseCase(
         }
 
         // 2. Get the user by id.
-        val user = userRepository.getById(command.userId)
+        val user = this.userRepository.getById(command.userId)
             ?: throw ErrorHandler(ErrorType.USER_NOT_FOUND)
 
         // 3. End of Use Case.

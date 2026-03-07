@@ -11,6 +11,25 @@ class CategoryController(
     private val service: CategoryServiceI
 ) {
 
+    @GetMapping
+    fun getById(
+        @RequestHeader(value = "Authorization", required = false) token: String?,
+        @RequestParam id: String
+    ): ResponseEntity<*> {
+        val request = GetCategoryByIdMapper.toRequest(token, id)
+        val response = service.getById(request)
+        return ResponseEntity.ok(response)
+    }
+
+    @GetMapping("/all")
+    fun getAll(
+        @RequestHeader(value = "Authorization", required = false) token: String?
+    ): ResponseEntity<*> {
+        val request = GetAllCategoriesMapper.toRequest(token)
+        val response = service.getAll(request)
+        return ResponseEntity.ok(response)
+    }
+
     @PostMapping
     fun create(
         @RequestHeader("Authorization") token: String,
@@ -41,22 +60,4 @@ class CategoryController(
         return ResponseEntity.noContent().build<Any>()
     }
 
-    @GetMapping
-    fun getById(
-        @RequestHeader("Authorization") token: String,
-        @RequestParam id: String
-    ): ResponseEntity<*> {
-        val request = GetCategoryByIdMapper.toRequest(token, id)
-        val response = service.getById(request)
-        return ResponseEntity.ok(response)
-    }
-
-    @GetMapping("/all")
-    fun getAll(
-        @RequestHeader("Authorization") token: String
-    ): ResponseEntity<*> {
-        val request = GetAllCategoriesMapper.toRequest(token)
-        val response = service.getAll(request)
-        return ResponseEntity.ok(response)
-    }
 }

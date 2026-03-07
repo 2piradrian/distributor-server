@@ -37,7 +37,7 @@ class CreateUserUseCase(
         }
 
         // 2. Check if the username already exists.
-        val usernameCheck = userRepository.getByUsername(command.username)
+        val usernameCheck = this.userRepository.getByUsername(command.username)
         if (usernameCheck != null) {
             throw ErrorHandler(ErrorType.USERNAME_ALREADY_EXISTS)
         }
@@ -46,7 +46,7 @@ class CreateUserUseCase(
         val newUser = User(
             id = null,
             username = command.username,
-            password = authHelper.hashPassword(command.password),
+            password = this.authHelper.hashPassword(command.password),
             role = command.role,
             status = Status.ACTIVE,
             createdAt = Date(),
@@ -54,7 +54,7 @@ class CreateUserUseCase(
         )
 
         // 4. Save the user.
-        val saved = userRepository.save(newUser)
+        val saved = this.userRepository.save(newUser)
 
         // 5. End of Use Case.
         return Result(

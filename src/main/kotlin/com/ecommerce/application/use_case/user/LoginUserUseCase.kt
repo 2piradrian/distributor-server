@@ -28,7 +28,7 @@ class LoginUserUseCase(
     fun execute(command: Command): Result {
 
         // 1. Get the user by username.
-        val user = userRepository.getByUsername(command.username)
+        val user = this.userRepository.getByUsername(command.username)
             ?: throw ErrorHandler(ErrorType.USER_NOT_FOUND)
 
         // 2. Check if the user is active.
@@ -37,12 +37,12 @@ class LoginUserUseCase(
         }
 
         // 3. Validate the password.
-        if (!authHelper.validatePassword(user, command.password)) {
+        if (!this.authHelper.validatePassword(user, command.password)) {
             throw ErrorHandler(ErrorType.INVALID_PASSWORD)
         }
 
         // 4. Create a token.
-        val token = authHelper.createToken(user)
+        val token = this.authHelper.createToken(user)
 
         // 5. End of Use Case.
         return Result(

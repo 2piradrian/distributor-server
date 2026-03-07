@@ -39,12 +39,12 @@ class UpdateProductUseCase(
         }
 
         // 2. Check if the product exists.
-        val product = productRepository.getById(command.id)
+        val product = this.productRepository.getById(command.id)
             ?: throw ErrorHandler(ErrorType.PRODUCT_NOT_FOUND)
 
         // 3. Check if a product with the same name already exists (if name changed).
         if (product.name != command.name) {
-            val existingProduct = productRepository.getByName(command.name)
+            val existingProduct = this.productRepository.getByName(command.name)
             if (existingProduct != null) {
                 throw ErrorHandler(ErrorType.PRODUCT_ALREADY_EXISTS)
             }
@@ -64,7 +64,7 @@ class UpdateProductUseCase(
         )
 
         // 6. Save the product.
-        val updated = productRepository.update(product)
+        val updated = this.productRepository.update(product)
 
         // 7. End of Use Case.
         return Result(

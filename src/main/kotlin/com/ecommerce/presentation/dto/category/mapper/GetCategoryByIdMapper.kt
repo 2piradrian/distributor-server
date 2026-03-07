@@ -12,7 +12,7 @@ object GetCategoryByIdMapper {
         )
     }
 
-    fun toRequest(token: String, id: String?): GetCategoryByIdReq {
+    fun toRequest(token: String?, id: String): GetCategoryByIdReq {
         return GetCategoryByIdReq.build(
             token = token,
             id = id

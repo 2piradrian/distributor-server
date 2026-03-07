@@ -14,7 +14,7 @@ class GetAllProductsUseCase(
 ) {
 
     data class Command(
-        val user: User,
+        val user: User?,
         val filters: ProductFilters? = null
     )
 
@@ -25,7 +25,12 @@ class GetAllProductsUseCase(
     fun execute(command: Command): Result {
 
         // 1. Fetch all products with filters.
-        val products = productRepository.getAll(command.filters)
+        val products = if (command.user != null) {
+            productRepository.getAll(command.filters)
+        }
+        else {
+            productRepository.getAllPublic(command.filters)
+        }
 
         // 2. End of Use Case.
         return Result(

@@ -50,7 +50,7 @@ class UpdateUserUseCase(
         // 4. Update the user.
         existingUser.update(
             username = command.username,
-            hashedPassword = authHelper.hashPassword(command.password),
+            hashedPassword = this.authHelper.hashPassword(command.password),
             role = command.role,
             status = command.status,
         )

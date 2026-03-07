@@ -23,9 +23,9 @@ class CategoryService(
 ) : CategoryServiceI {
 
     override fun create(dto: CreateCategoryReq): CreateCategoryRes {
-        val user: User = userService.auth(dto.token)
+        val user: User = this.userService.auth(dto.token)
 
-        val result = create.execute(
+        val result = this.create.execute(
             command = CreateCategoryUseCase.Command(
                 user = user,
                 name = dto.name
@@ -38,9 +38,9 @@ class CategoryService(
     }
 
     override fun update(dto: UpdateCategoryReq): UpdateCategoryRes {
-        val user: User = userService.auth(dto.token)
+        val user: User = this.userService.auth(dto.token)
 
-        val result = update.execute(
+        val result = this.update.execute(
             command = UpdateCategoryUseCase.Command(
                 user = user,
                 id = dto.id,
@@ -54,9 +54,9 @@ class CategoryService(
     }
 
     override fun delete(token: String, id: String) {
-        val user: User = userService.auth(token)
+        val user: User = this.userService.auth(token)
 
-        delete.execute(
+        this.delete.execute(
             command = DeleteCategoryUseCase.Command(
                 user = user,
                 id = id
@@ -65,9 +65,9 @@ class CategoryService(
     }
 
     override fun getById(dto: GetCategoryByIdReq): GetCategoryByIdRes {
-        val user: User = userService.auth(dto.token)
+        val user: User? = this.userService.tryAuth(dto.token)
 
-        val result = getById.execute(
+        val result = this.getById.execute(
             command = GetCategoryByIdUseCase.Command(
                 user = user,
                 id = dto.id
@@ -80,9 +80,9 @@ class CategoryService(
     }
 
     override fun getAll(dto: GetAllCategoriesReq): GetAllCategoriesRes {
-        val user: User = userService.auth(dto.token)
+        val user: User? = this.userService.tryAuth(dto.token)
 
-        val result = getAll.execute(
+        val result = this.getAll.execute(
             command = GetAllCategoriesUseCase.Command(
                 user = user
             )

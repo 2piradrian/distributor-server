@@ -33,11 +33,11 @@ class UpdateCategoryUseCase(
         }
 
         // 2. Fetch the category.
-        val category = categoryRepository.getById(command.id)
+        val category = this.categoryRepository.getById(command.id)
             ?: throw ErrorHandler(ErrorType.CATEGORY_NOT_FOUND)
 
         // 3. Check if another category with the same name already exists.
-        val existingCategory = categoryRepository.getByName(command.name)
+        val existingCategory = this.categoryRepository.getByName(command.name)
         if (existingCategory != null && existingCategory.id != command.id) {
             throw ErrorHandler(ErrorType.CATEGORY_ALREADY_EXISTS)
         }
@@ -46,7 +46,7 @@ class UpdateCategoryUseCase(
         category.update(command.name)
 
         // 5. Save the category.
-        val saved = categoryRepository.save(category)
+        val saved = this.categoryRepository.save(category)
 
         // 6. End of Use Case.
         return Result(

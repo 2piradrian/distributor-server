@@ -8,7 +8,7 @@ import com.ecommerce.presentation.dto.product.response.GetAllProductsRes
 object GetAllProductsMapper {
 
     fun toRequest(
-        token: String,
+        token: String?,
         categoryId: String? = null,
         name: String? = null,
         minPrice: Double? = null,

@@ -27,11 +27,11 @@ class DeleteProductUseCase(
         }
 
         // 2. Check if the product exists.
-        val product = productRepository.getById(command.id)
+        val product = this.productRepository.getById(command.id)
             ?: throw ErrorHandler(ErrorType.PRODUCT_NOT_FOUND)
 
         // 3. Delete the product.
-        productRepository.delete(product.id!!)
+        this.productRepository.delete(product.id!!)
 
         // 4. End of Use Case.
     }

@@ -4,7 +4,7 @@ import com.ecommerce.domain.error.ErrorHandler
 import com.ecommerce.domain.error.ErrorType
 
 data class GetProductByIdReq(
-    val token: String,
+    val token: String?,
     val id: String
 ) {
     companion object {
@@ -12,10 +12,6 @@ data class GetProductByIdReq(
             token: String?,
             id: String?
         ): GetProductByIdReq {
-
-            if (token.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.UNAUTHORIZED)
-            }
 
             if (id.isNullOrEmpty()) {
                 throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)

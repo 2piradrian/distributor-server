@@ -12,7 +12,7 @@ object GetAllCategoriesMapper {
         )
     }
 
-    fun toRequest(token: String): GetAllCategoriesReq {
+    fun toRequest(token: String?): GetAllCategoriesReq {
         return GetAllCategoriesReq.build(
             token = token
         )

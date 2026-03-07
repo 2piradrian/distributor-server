@@ -4,6 +4,8 @@ import com.ecommerce.domain.entity.Product
 import com.ecommerce.infrastructure.postgres.model.ProductModel
 import com.ecommerce.infrastructure.postgres.projections.product.ProductBasicProjection
 import com.ecommerce.infrastructure.postgres.projections.product.ProductFullProjection
+import com.ecommerce.infrastructure.postgres.projections.product.ProductPublicBasicProjection
+import com.ecommerce.infrastructure.postgres.projections.product.ProductPublicFullProjection
 import java.util.Date
 
 object ProductEntityMapper {
@@ -43,6 +45,36 @@ object ProductEntityMapper {
     }
 
     fun toDomain(projection: ProductBasicProjection?): Product? {
+        return projection?.let {
+            Product(
+                id = it.getId(),
+                name = it.getName(),
+                description = "",
+                price = it.getPrice(),
+                stock = it.getStock(),
+                category = null,
+                createdAt = null,
+                updatedAt = null
+            )
+        }
+    }
+
+    fun toDomain(projection: ProductPublicFullProjection?): Product? {
+        return projection?.let {
+            Product(
+                id = it.getId(),
+                name = it.getName(),
+                description = it.getDescription(),
+                price = it.getPrice(),
+                stock = it.getStock(),
+                category = CategoryEntityMapper.toDomain(it.getCategory()),
+                createdAt = it.getCreatedAt(),
+                updatedAt = it.getUpdatedAt()
+            )
+        }
+    }
+
+    fun toDomain(projection: ProductPublicBasicProjection?): Product? {
         return projection?.let {
             Product(
                 id = it.getId(),

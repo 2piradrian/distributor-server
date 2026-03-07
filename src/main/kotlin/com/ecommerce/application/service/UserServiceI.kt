@@ -6,6 +6,7 @@ import com.ecommerce.presentation.dto.user.response.*
 
 interface UserServiceI {
     fun auth(token: String): User
+    fun tryAuth(token: String?): User?
     fun auth(dto: AuthUserReq): AuthUserRes
     fun login(dto: LoginUserReq): LoginUserRes
     fun create(dto: CreateUserReq): CreateUserRes

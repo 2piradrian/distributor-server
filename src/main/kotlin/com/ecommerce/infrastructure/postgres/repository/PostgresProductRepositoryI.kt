@@ -3,6 +3,8 @@ package com.ecommerce.infrastructure.postgres.repository
 import com.ecommerce.infrastructure.postgres.model.ProductModel
 import com.ecommerce.infrastructure.postgres.projections.product.ProductBasicProjection
 import com.ecommerce.infrastructure.postgres.projections.product.ProductFullProjection
+import com.ecommerce.infrastructure.postgres.projections.product.ProductPublicBasicProjection
+import com.ecommerce.infrastructure.postgres.projections.product.ProductPublicFullProjection
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.stereotype.Repository
@@ -14,6 +16,10 @@ interface PostgresProductRepositoryI : JpaRepository<ProductModel, String>, JpaS
     fun findFullById(id: String): Optional<ProductFullProjection>
 
     fun findBasicById(id: String): Optional<ProductBasicProjection>
+
+    fun findPublicFullById(id: String): Optional<ProductPublicFullProjection>
+
+    fun findPublicBasicById(id: String): Optional<ProductPublicBasicProjection>
 
     fun findFullByName(name: String): Optional<ProductFullProjection>
 

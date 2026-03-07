@@ -33,7 +33,7 @@ class CreateCategoryUseCase(
         }
 
         // 2. Check if a category with the same name already exists.
-        val existingCategory = categoryRepository.getByName(command.name)
+        val existingCategory = this.categoryRepository.getByName(command.name)
         if (existingCategory != null) {
             throw ErrorHandler(ErrorType.CATEGORY_ALREADY_EXISTS)
         }
@@ -47,7 +47,7 @@ class CreateCategoryUseCase(
         )
 
         // 4. Save the category.
-        val saved = categoryRepository.save(newCategory)
+        val saved = this.categoryRepository.save(newCategory)
 
         // 5. End of Use Case.
         return Result(

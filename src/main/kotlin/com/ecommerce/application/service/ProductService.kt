@@ -23,9 +23,9 @@ class ProductService(
 ) : ProductServiceI {
 
     override fun create(dto: CreateProductReq): CreateProductRes {
-        val user: User = userService.auth(dto.token)
+        val user: User = this.userService.auth(dto.token)
 
-        val result = create.execute(
+        val result = this.create.execute(
             command = CreateProductUseCase.Command(
                 user = user,
                 name = dto.name,
@@ -42,9 +42,9 @@ class ProductService(
     }
 
     override fun update(dto: UpdateProductReq): UpdateProductRes {
-        val user: User = userService.auth(dto.token)
+        val user: User = this.userService.auth(dto.token)
 
-        val result = update.execute(
+        val result = this.update.execute(
             command = UpdateProductUseCase.Command(
                 user = user,
                 id = dto.id,
@@ -62,9 +62,9 @@ class ProductService(
     }
 
     override fun delete(token: String, id: String) {
-        val user: User = userService.auth(token)
+        val user: User = this.userService.auth(token)
 
-        delete.execute(
+        this.delete.execute(
             command = DeleteProductUseCase.Command(
                 user = user,
                 id = id
@@ -73,9 +73,9 @@ class ProductService(
     }
 
     override fun getById(dto: GetProductByIdReq): GetProductByIdRes {
-        val user: User = userService.auth(dto.token)
+        val user: User? = this.userService.tryAuth(dto.token)
 
-        val result = getById.execute(
+        val result = this.getById.execute(
             command = GetProductByIdUseCase.Command(
                 user = user,
                 id = dto.id
@@ -88,9 +88,9 @@ class ProductService(
     }
 
     override fun getAll(dto: GetAllProductsReq): GetAllProductsRes {
-        val user: User = userService.auth(dto.token)
+        val user: User? = this.userService.tryAuth(dto.token)
 
-        val result = getAll.execute(
+        val result = this.getAll.execute(
             command = GetAllProductsUseCase.Command(
                 user = user,
                 filters = dto.filters

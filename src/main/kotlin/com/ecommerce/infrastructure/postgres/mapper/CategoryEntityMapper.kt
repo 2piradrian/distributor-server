@@ -3,6 +3,8 @@ package com.ecommerce.infrastructure.postgres.mapper
 import com.ecommerce.infrastructure.postgres.model.CategoryModel
 import com.ecommerce.infrastructure.postgres.projections.category.CategoryBasicProjection
 import com.ecommerce.infrastructure.postgres.projections.category.CategoryFullProjection
+import com.ecommerce.infrastructure.postgres.projections.category.CategoryPublicBasicProjection
+import com.ecommerce.infrastructure.postgres.projections.category.CategoryPublicFullProjection
 import com.ecommerce.domain.entity.Category
 import java.util.Date
 
@@ -35,6 +37,28 @@ object CategoryEntityMapper {
     }
 
     fun toDomain(projection: CategoryBasicProjection?): Category? {
+        return projection?.let {
+            Category(
+                id = it.getId(),
+                name = it.getName(),
+                createdAt = null,
+                updatedAt = null
+            )
+        }
+    }
+
+    fun toDomain(projection: CategoryPublicFullProjection?): Category? {
+        return projection?.let {
+            Category(
+                id = it.getId(),
+                name = it.getName(),
+                createdAt = it.getCreatedAt(),
+                updatedAt = it.getUpdatedAt()
+            )
+        }
+    }
+
+    fun toDomain(projection: CategoryPublicBasicProjection?): Category? {
         return projection?.let {
             Category(
                 id = it.getId(),

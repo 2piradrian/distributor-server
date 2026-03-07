@@ -13,7 +13,7 @@ class GetAllCategoriesUseCase(
 ) {
 
     data class Command(
-        val user: User
+        val user: User?
     )
 
     data class Result(
@@ -22,13 +22,15 @@ class GetAllCategoriesUseCase(
 
     fun execute(command: Command): Result {
 
-        // 1. Validate the user role.
-        // Everyone can see categories.
+        // 1. Fetch all categories.
+        val categories = if (command.user != null) {
+            this.categoryRepository.getAllBasic()
+        }
+        else {
+            this.categoryRepository.getAllPublicBasic()
+        }
 
-        // 2. Fetch all categories.
-        val categories = categoryRepository.getAllBasic()
-
-        // 3. End of Use Case.
+        // 2. End of Use Case.
         return Result(
             categories = categories
         )

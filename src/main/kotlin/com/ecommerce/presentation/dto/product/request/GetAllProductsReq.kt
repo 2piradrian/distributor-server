@@ -5,7 +5,7 @@ import com.ecommerce.domain.error.ErrorType
 import com.ecommerce.domain.filters.ProductFilters
 
 data class GetAllProductsReq(
-    val token: String,
+    val token: String?,
     val filters: ProductFilters? = null
 ) {
     companion object {
@@ -13,10 +13,6 @@ data class GetAllProductsReq(
             token: String?,
             filters: ProductFilters? = null
         ): GetAllProductsReq {
-
-            if (token.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.UNAUTHORIZED)
-            }
 
             return GetAllProductsReq(
                 token,
