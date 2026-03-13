@@ -1,37 +1,16 @@
 package com.ecommerce.presentation.dto.user.request
 
-import com.ecommerce.domain.error.ErrorHandler
-import com.ecommerce.domain.error.ErrorType
+import jakarta.validation.constraints.NotBlank
 
 data class CreateAdminUserReq(
+
+    @field:NotBlank
     val secret: String,
+
+    @field:NotBlank
     val username: String,
+
+    @field:NotBlank
     val password: String
-) {
-    companion object {
-        fun build(
-            secret: String?,
-            username: String?,
-            password: String?
-        ): CreateAdminUserReq {
 
-            if (secret.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.UNAUTHORIZED)
-            }
-
-            if (username.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (password.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            return CreateAdminUserReq(
-                secret,
-                username,
-                password
-            )
-        }
-    }
-}
+)

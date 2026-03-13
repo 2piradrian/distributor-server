@@ -1,30 +1,13 @@
 package com.ecommerce.presentation.dto.category.request
 
-import com.ecommerce.domain.error.ErrorHandler
-import com.ecommerce.domain.error.ErrorType
+import jakarta.validation.constraints.NotBlank
 
 data class CreateCategoryReq(
+
+    @field:NotBlank
     val token: String,
+
+    @field:NotBlank
     val name: String
-) {
-    companion object {
-        fun build(
-            token: String?,
-            name: String?
-        ): CreateCategoryReq {
 
-            if (token.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.UNAUTHORIZED)
-            }
-
-            if (name.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            return CreateCategoryReq(
-                token,
-                name
-            )
-        }
-    }
-}
+)

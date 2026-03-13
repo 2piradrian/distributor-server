@@ -13,7 +13,7 @@ class CategoryController(
 
     @GetMapping
     fun getById(
-        @RequestHeader(value = "Authorization", required = false) token: String?,
+        @RequestHeader(value = "Authorization") token: String,
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = GetCategoryByIdMapper.toRequest(token, id)

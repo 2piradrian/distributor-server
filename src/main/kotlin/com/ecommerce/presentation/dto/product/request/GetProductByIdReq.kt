@@ -1,26 +1,12 @@
 package com.ecommerce.presentation.dto.product.request
 
-import com.ecommerce.domain.error.ErrorHandler
-import com.ecommerce.domain.error.ErrorType
+import jakarta.validation.constraints.NotBlank
 
 data class GetProductByIdReq(
+
     val token: String?,
+
+    @field:NotBlank
     val id: String
-) {
-    companion object {
-        fun build(
-            token: String?,
-            id: String?
-        ): GetProductByIdReq {
 
-            if (id.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            return GetProductByIdReq(
-                token,
-                id
-            )
-        }
-    }
-}
+)

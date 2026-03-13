@@ -1,26 +1,12 @@
 package com.ecommerce.presentation.dto.category.request
 
-import com.ecommerce.domain.error.ErrorHandler
-import com.ecommerce.domain.error.ErrorType
+import jakarta.validation.constraints.NotBlank
 
 data class GetCategoryByIdReq(
+
     val token: String?,
+
+    @field:NotBlank
     val id: String
-) {
-    companion object {
-        fun build(
-            token: String?,
-            id: String?
-        ): GetCategoryByIdReq {
 
-            if (id.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            return GetCategoryByIdReq(
-                token,
-                id
-            )
-        }
-    }
-}
+)

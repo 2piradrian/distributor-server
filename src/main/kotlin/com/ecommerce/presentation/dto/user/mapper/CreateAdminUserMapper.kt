@@ -6,20 +6,26 @@ import com.ecommerce.presentation.dto.user.response.CreateAdminUserRes
 
 object CreateAdminUserMapper {
 
-    fun toResponse(user: User): CreateAdminUserRes {
-        return CreateAdminUserRes(
-            id = user.id!!,
-            username = user.username,
-            role = user.role.toMap(),
-            status = user.status.toMap()
+    fun toRequest(
+        payload: Map<String, Any>
+    ): CreateAdminUserReq {
+        return CreateAdminUserReq(
+            secret = payload["secret"] as String,
+            username = payload["username"] as String,
+            password = payload["password"] as String
         )
     }
 
-    fun toRequest(payload: Map<String, Any>): CreateAdminUserReq {
-        return CreateAdminUserReq.build(
-            secret = payload["secret"] as? String,
-            username = payload["username"] as? String,
-            password = payload["password"] as? String
+    fun toResponse(
+        user: User
+    ): CreateAdminUserRes {
+        return CreateAdminUserRes(
+            id = user.id!!,
+            username = user.username,
+            role = user.role,
+            status = user.status,
+            createdAt = user.createdAt,
+            updatedAt = user.updatedAt
         )
     }
 

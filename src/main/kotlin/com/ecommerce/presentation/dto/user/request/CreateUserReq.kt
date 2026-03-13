@@ -1,44 +1,19 @@
 package com.ecommerce.presentation.dto.user.request
 
-import com.ecommerce.domain.error.ErrorHandler
-import com.ecommerce.domain.error.ErrorType
+import jakarta.validation.constraints.NotBlank
 
 data class CreateUserReq(
+
+    @field:NotBlank
     val token: String,
+
+    @field:NotBlank
     val username: String,
+
+    @field:NotBlank
     val password: String,
-    val role: String
-) {
-    companion object {
-        fun build(
-            token: String?,
-            username: String?,
-            password: String?,
-            role: String?
-        ): CreateUserReq {
 
-            if (token.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.UNAUTHORIZED)
-            }
+    @field:NotBlank
+    val role: String,
 
-            if (username.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (password.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (role.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            return CreateUserReq(
-                token,
-                username,
-                password,
-                role
-            )
-        }
-    }
-}
+)

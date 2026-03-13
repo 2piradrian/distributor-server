@@ -1,58 +1,25 @@
 package com.ecommerce.presentation.dto.user.request
 
-import com.ecommerce.domain.error.ErrorHandler
-import com.ecommerce.domain.error.ErrorType
+import jakarta.validation.constraints.NotBlank
 
 data class UpdateUserReq(
+
+    @field:NotBlank
     val token: String,
+
+    @field:NotBlank
     val id: String,
+
+    @field:NotBlank
     val username: String,
+
+    @field:NotBlank
     val password: String,
+
+    @field:NotBlank
     val role: String,
-    val status: String
-) {
-    companion object {
-        fun build(
-            token: String?,
-            id: String?,
-            username: String?,
-            password: String?,
-            role: String?,
-            status: String?
-        ): UpdateUserReq {
 
-            if (token.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.UNAUTHORIZED)
-            }
+    @field:NotBlank
+    val status: String,
 
-            if (id.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (username.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (password.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (role.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (status.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            return UpdateUserReq(
-                token,
-                id,
-                username,
-                password,
-                role,
-                status
-            )
-        }
-    }
-}
+)

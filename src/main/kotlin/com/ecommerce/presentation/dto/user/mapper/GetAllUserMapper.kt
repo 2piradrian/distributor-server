@@ -6,15 +6,19 @@ import com.ecommerce.presentation.dto.user.response.GetAllUserRes
 
 object GetAllUserMapper {
 
-    fun toResponse(users: List<User>): GetAllUserRes {
-        return GetAllUserRes(
-            users = users
+    fun toRequest(
+        token: String
+    ): GetAllUserReq {
+        return GetAllUserReq(
+            token = token
         )
     }
 
-    fun toRequest(token: String): GetAllUserReq {
-        return GetAllUserReq.build(
-            token =  token
+    fun toResponse(
+        users: List<User>
+    ): GetAllUserRes {
+        return GetAllUserRes(
+            users = users
         )
     }
 

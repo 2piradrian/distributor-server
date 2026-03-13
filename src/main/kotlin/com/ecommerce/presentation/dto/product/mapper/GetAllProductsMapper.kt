@@ -14,7 +14,7 @@ object GetAllProductsMapper {
         minPrice: Double? = null,
         maxPrice: Double? = null
     ): GetAllProductsReq {
-        return GetAllProductsReq.build(
+        return GetAllProductsReq(
             token = token,
             filters = ProductFilters(
                 categoryId = categoryId,
@@ -25,7 +25,12 @@ object GetAllProductsMapper {
         )
     }
 
-    fun toResponse(products: List<Product>): GetAllProductsRes {
-        return GetAllProductsRes(products)
+    fun toResponse(
+        products: List<Product>
+    ): GetAllProductsRes {
+        return GetAllProductsRes(
+            products
+        )
     }
+
 }

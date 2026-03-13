@@ -6,16 +6,20 @@ import com.ecommerce.presentation.dto.user.response.LoginUserRes
 
 object LoginUserMapper {
 
-    fun toResponse(token: Token): LoginUserRes {
-        return LoginUserRes(
-            token = token
+    fun toRequest(
+        payload: Map<String, Any>
+    ): LoginUserReq {
+        return LoginUserReq(
+            username = payload["username"] as String,
+            password = payload["password"] as String
         )
     }
 
-    fun toRequest(payload: Map<String, Any>): LoginUserReq {
-        return LoginUserReq.build(
-            username = payload["username"] as? String,
-            password = payload["password"] as? String
+    fun toResponse(
+        token: Token
+    ): LoginUserRes {
+        return LoginUserRes(
+            token = token
         )
     }
 

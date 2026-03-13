@@ -6,15 +6,19 @@ import com.ecommerce.presentation.dto.category.response.GetAllCategoriesRes
 
 object GetAllCategoriesMapper {
 
-    fun toResponse(categories: List<Category>): GetAllCategoriesRes {
-        return GetAllCategoriesRes(
-            categories = categories
+    fun toRequest(
+        token: String?
+    ): GetAllCategoriesReq {
+        return GetAllCategoriesReq(
+            token = token
         )
     }
 
-    fun toRequest(token: String?): GetAllCategoriesReq {
-        return GetAllCategoriesReq.build(
-            token = token
+    fun toResponse(
+        categories: List<Category>
+    ): GetAllCategoriesRes {
+        return GetAllCategoriesRes(
+            categories = categories
         )
     }
 

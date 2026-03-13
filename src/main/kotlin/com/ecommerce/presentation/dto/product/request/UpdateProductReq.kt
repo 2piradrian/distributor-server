@@ -1,78 +1,38 @@
 package com.ecommerce.presentation.dto.product.request
 
-import com.ecommerce.domain.error.ErrorHandler
-import com.ecommerce.domain.error.ErrorType
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.Positive
 
 data class UpdateProductReq(
+
+    @field:NotBlank
     val token: String,
+
+    @field:NotBlank
     val id: String,
+
+    @field:NotBlank
     val name: String,
+
+    @field:NotBlank
     val description: String,
+
+    @field:NotNull
+    @field:Positive
     val price: Double,
+
+    @field:NotNull
     val stock: Int,
+
+    @field:NotBlank
     val categoryId: String,
-    val mainImage: String?,
+
+    val mainImage: String,
+
     val images: List<String>,
-    val isVisible: Boolean
-) {
-    companion object {
-        fun build(
-            token: String?,
-            id: String?,
-            name: String?,
-            description: String?,
-            price: Double?,
-            stock: Int?,
-            categoryId: String?,
-            mainImage: String?,
-            images: List<String>?,
-            isVisible: Boolean?
-        ): UpdateProductReq {
 
-            if (token.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.UNAUTHORIZED)
-            }
+    @field:NotNull
+    val isVisible: Boolean,
 
-            if (id.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (name.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (description.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (categoryId.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (price == null) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (stock == null) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            if (isVisible == null) {
-                throw ErrorHandler(ErrorType.MISSING_REQUIRED_FIELDS)
-            }
-
-            return UpdateProductReq(
-                token,
-                id,
-                name,
-                description,
-                price,
-                stock,
-                categoryId,
-                mainImage,
-                images ?: emptyList(),
-                isVisible
-            )
-        }
-    }
-}
+)

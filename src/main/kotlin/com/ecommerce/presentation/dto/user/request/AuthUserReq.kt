@@ -1,23 +1,10 @@
 package com.ecommerce.presentation.dto.user.request
 
-import com.ecommerce.domain.error.ErrorHandler
-import com.ecommerce.domain.error.ErrorType
+import jakarta.validation.constraints.NotBlank
 
 data class AuthUserReq(
+
+    @field:NotBlank
     val token: String
-) {
-    companion object {
-        fun build(
-            token: String?
-        ): AuthUserReq {
 
-            if (token.isNullOrEmpty()) {
-                throw ErrorHandler(ErrorType.UNAUTHORIZED)
-            }
-
-            return AuthUserReq(
-                token
-            )
-        }
-    }
-}
+)

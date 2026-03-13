@@ -3,6 +3,7 @@ package com.ecommerce.core.handler
 import com.ecommerce.domain.error.ErrorHandler
 import com.ecommerce.domain.error.ErrorType
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 
@@ -16,10 +17,21 @@ class GlobalExceptionHandler {
             .body(e.toResponse())
     }
 
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleValidationException(e: MethodArgumentNotValidException): ResponseEntity<*> {
+        val error = ErrorHandler(ErrorType.INVALID_FIELDS)
+
+        return ResponseEntity
+            .status(error.httpCode)
+            .body(error.toResponse())
+    }
+
     @ExceptionHandler(Exception::class)
     fun handleGenericException(e: Exception): ResponseEntity<*> {
+        val error = ErrorHandler(ErrorType.INTERNAL_ERROR)
+
         return ResponseEntity
-            .status(500)
-            .body(ErrorHandler(ErrorType.INTERNAL_ERROR).toResponse())
+            .status(error.httpCode)
+            .body(error.toResponse())
     }
 }

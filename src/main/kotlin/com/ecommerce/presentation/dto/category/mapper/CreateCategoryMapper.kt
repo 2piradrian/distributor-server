@@ -5,16 +5,21 @@ import com.ecommerce.presentation.dto.category.response.CreateCategoryRes
 
 object CreateCategoryMapper {
 
-    fun toResponse(id: String): CreateCategoryRes {
-        return CreateCategoryRes(
-            id = id
+    fun toRequest(
+        token: String,
+        payload: Map<String, Any>
+    ): CreateCategoryReq {
+        return CreateCategoryReq(
+            token = token,
+            name = payload["name"] as String
         )
     }
 
-    fun toRequest(token: String, payload: Map<String, Any>): CreateCategoryReq {
-        return CreateCategoryReq.build(
-            token = token,
-            name = payload["name"] as? String
+    fun toResponse(
+        id: String
+    ): CreateCategoryRes {
+        return CreateCategoryRes(
+            id = id
         )
     }
 
