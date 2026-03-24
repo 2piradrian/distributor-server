@@ -21,6 +21,9 @@ class ProductModel {
     @Column(nullable = false)
     var price: Double = 0.0
 
+    @Column(nullable = true)
+    var offerPrice: Double? = null
+
     @Column(nullable = false)
     var stock: Int = 0
 

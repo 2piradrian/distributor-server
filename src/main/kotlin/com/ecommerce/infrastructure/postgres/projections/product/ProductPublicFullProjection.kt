@@ -8,6 +8,7 @@ interface ProductPublicFullProjection {
     fun getName(): String
     fun getDescription(): String
     fun getPrice(): Double
+    fun getOfferPrice(): Double?
     fun getStock(): Int
     fun getCategory(): CategoryPublicBasicProjection?
     fun getMainImage(): String?

@@ -19,6 +19,7 @@ object ProductEntityMapper {
                 name = it.name,
                 description = it.description,
                 price = it.price,
+                offerPrice = it.offerPrice,
                 stock = it.stock,
                 category = CategoryEntityMapper.toDomain(it.category),
                 mainImage = it.mainImage,
@@ -39,6 +40,7 @@ object ProductEntityMapper {
                 name = it.getName(),
                 description = it.getDescription(),
                 price = it.getPrice(),
+                offerPrice = it.getOfferPrice(),
                 stock = it.getStock(),
                 category = CategoryEntityMapper.toDomain(it.getCategory()),
                 mainImage = it.getMainImage(),
@@ -57,6 +59,7 @@ object ProductEntityMapper {
                 name = it.getName(),
                 description = "",
                 price = it.getPrice(),
+                offerPrice = it.getOfferPrice(),
                 stock = it.getStock(),
                 category = null,
                 mainImage = it.getMainImage(),
@@ -75,6 +78,7 @@ object ProductEntityMapper {
                 name = it.getName(),
                 description = it.getDescription(),
                 price = it.getPrice(),
+                offerPrice = it.getOfferPrice(),
                 stock = it.getStock(),
                 category = CategoryEntityMapper.toDomain(it.getCategory()),
                 mainImage = it.getMainImage(),
@@ -93,6 +97,7 @@ object ProductEntityMapper {
                 name = it.getName(),
                 description = "",
                 price = it.getPrice(),
+                offerPrice = it.getOfferPrice(),
                 stock = it.getStock(),
                 category = null,
                 mainImage = it.getMainImage(),
@@ -113,6 +118,7 @@ object ProductEntityMapper {
                 name = it.name
                 description = it.description
                 price = it.price
+                offerPrice = it.offerPrice
                 stock = it.stock
                 category = CategoryEntityMapper.toModel(it.category)
                 mainImage = it.mainImage

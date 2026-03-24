@@ -7,6 +7,7 @@ class Product(
     var name: String,
     var description: String,
     var price: Double,
+    var offerPrice: Double?,
     var stock: Int,
     var category: Category?,
     var mainImage: String?,
@@ -19,6 +20,7 @@ class Product(
         name: String,
         description: String,
         price: Double,
+        offerPrice: Double?,
         stock: Int,
         category: Category?,
         mainImage: String?,
@@ -28,6 +30,7 @@ class Product(
         this.name = name
         this.description = description
         this.price = price
+        this.offerPrice = offerPrice
         this.stock = stock
         this.category = category
         this.mainImage = mainImage
