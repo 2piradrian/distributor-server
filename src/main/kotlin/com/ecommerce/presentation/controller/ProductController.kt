@@ -29,13 +29,7 @@ class ProductController(
         @RequestParam(required = false) minPrice: Double?,
         @RequestParam(required = false) maxPrice: Double?
     ): ResponseEntity<*> {
-        val request = GetAllProductsMapper.toRequest(
-            token = token,
-            categoryId = categoryId,
-            name = name,
-            minPrice = minPrice,
-            maxPrice = maxPrice
-        )
+        val request = GetAllProductsMapper.toRequest(token, categoryId, name, minPrice, maxPrice)
         val response = service.getAll(request)
         return ResponseEntity.ok(response)
     }
@@ -66,7 +60,8 @@ class ProductController(
         @RequestHeader("Authorization") token: String,
         @RequestParam id: String
     ): ResponseEntity<*> {
-        service.delete(token, id)
+        val request = DeleteProductMapper.toRequest(token, id)
+        service.delete(request)
         return ResponseEntity.noContent().build<Any>()
     }
 

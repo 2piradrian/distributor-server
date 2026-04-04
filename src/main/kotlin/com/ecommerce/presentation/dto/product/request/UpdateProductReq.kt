@@ -7,35 +7,35 @@ import jakarta.validation.constraints.Positive
 data class UpdateProductReq(
 
     @field:NotBlank
-    val token: String,
+    val token: String?,
 
     @field:NotBlank
-    val id: String,
+    val id: String?,
 
     @field:NotBlank
-    val name: String,
+    val name: String?,
 
     @field:NotBlank
-    val description: String,
+    val description: String?,
 
     @field:NotNull
     @field:Positive
-    val price: Double,
+    val price: Double?,
 
     @field:Positive
     val offerPrice: Double?,
 
     @field:NotNull
-    val stock: Int,
+    val stock: Int?,
 
     @field:NotBlank
-    val categoryId: String,
+    val categoryId: String?,
 
     val mainImage: String?,
 
     val images: List<String> = emptyList(),
 
     @field:NotNull
-    val isVisible: Boolean
+    val isVisible: Boolean?
 
-) {}
+)

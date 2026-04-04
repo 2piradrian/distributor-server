@@ -13,10 +13,10 @@ object UpdateUserMapper {
         return UpdateUserReq(
             token = token,
             id = id,
-            username = payload["username"] as String,
-            password = payload["password"] as String,
-            role = payload["role"] as String,
-            status = payload["status"] as String
+            username = payload["username"] as? String,
+            password = payload["password"] as? String,
+            role = payload["role"] as? String,
+            status = payload["status"] as? String
         )
     }
 

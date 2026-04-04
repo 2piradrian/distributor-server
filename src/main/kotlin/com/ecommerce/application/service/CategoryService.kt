@@ -23,12 +23,12 @@ class CategoryService(
 ) : CategoryServiceI {
 
     override fun create(dto: CreateCategoryReq): CreateCategoryRes {
-        val user: User = this.userService.auth(dto.token)
+        val user: User = this.userService.auth(dto.token!!)
 
         val result = this.create.execute(
             command = CreateCategoryUseCase.Command(
                 user = user,
-                name = dto.name
+                name = dto.name!!
             )
         )
 
@@ -38,13 +38,13 @@ class CategoryService(
     }
 
     override fun update(dto: UpdateCategoryReq): UpdateCategoryRes {
-        val user: User = this.userService.auth(dto.token)
+        val user: User = this.userService.auth(dto.token!!)
 
         val result = this.update.execute(
             command = UpdateCategoryUseCase.Command(
                 user = user,
-                id = dto.id,
-                name = dto.name
+                id = dto.id!!,
+                name = dto.name!!
             )
         )
 
@@ -53,13 +53,13 @@ class CategoryService(
         )
     }
 
-    override fun delete(token: String, id: String) {
-        val user: User = this.userService.auth(token)
+    override fun delete(dto: DeleteCategoryReq) {
+        val user: User = this.userService.auth(dto.token!!)
 
         this.delete.execute(
             command = DeleteCategoryUseCase.Command(
                 user = user,
-                id = id
+                id = dto.id!!
             )
         )
     }
@@ -70,7 +70,7 @@ class CategoryService(
         val result = this.getById.execute(
             command = GetCategoryByIdUseCase.Command(
                 user = user,
-                id = dto.id
+                id = dto.id!!
             )
         )
 

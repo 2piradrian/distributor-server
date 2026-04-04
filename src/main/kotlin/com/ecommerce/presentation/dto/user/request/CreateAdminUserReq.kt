@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank
 data class CreateAdminUserReq(
 
     @field:NotBlank
-    val secret: String,
+    val secret: String?,
 
     @field:NotBlank
-    val username: String,
+    val username: String?,
 
     @field:NotBlank
-    val password: String
+    val password: String?
 
 )

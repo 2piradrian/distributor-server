@@ -33,7 +33,7 @@ class UserService(
     override fun auth(dto: AuthUserReq): AuthUserRes {
         val result = this.authenticate.execute(
             command = AuthenticateUserUseCase.Command(
-                token = dto.token
+                token = dto.token!!
             )
         )
         return AuthUserMapper.toResponse(
@@ -54,8 +54,8 @@ class UserService(
     override fun login(dto: LoginUserReq): LoginUserRes {
         val result = this.login.execute(
             command = LoginUserUseCase.Command(
-                username = dto.username,
-                password = dto.password
+                username = dto.username!!,
+                password = dto.password!!
             )
         )
         return LoginUserMapper.toResponse(
@@ -64,14 +64,14 @@ class UserService(
     }
 
     override fun create(dto: CreateUserReq): CreateUserRes {
-        val user = this.auth(dto.token)
+        val user = this.auth(dto.token!!)
         
         val result = this.create.execute(
             command = CreateUserUseCase.Command(
                 user = user,
-                username = dto.username,
-                password = dto.password,
-                role = Role.fromString(dto.role)
+                username = dto.username!!,
+                password = dto.password!!,
+                role = Role.fromString(dto.role!!)
             )
         )
         return CreateUserMapper.toResponse(
@@ -80,16 +80,16 @@ class UserService(
     }
 
     override fun update(dto: UpdateUserReq): UpdateUserRes {
-        val user = this.auth(dto.token)
+        val user = this.auth(dto.token!!)
         
         val result = this.update.execute(
             command = UpdateUserUseCase.Command(
                 user = user,
-                userId = dto.id,
-                username = dto.username,
-                password = dto.password,
-                role = Role.fromString(dto.role),
-                status = Status.fromString(dto.status)
+                userId = dto.id!!,
+                username = dto.username!!,
+                password = dto.password!!,
+                role = Role.fromString(dto.role!!),
+                status = Status.fromString(dto.status!!)
             )
         )
         return UpdateUserMapper.toResponse(
@@ -98,12 +98,12 @@ class UserService(
     }
 
     override fun getById(dto: GetUserByIdReq): GetUserByIdRes {
-        val user = this.auth(dto.token)
+        val user = this.auth(dto.token!!)
         
         val result = this.getById.execute(
             command = GetUserByIdUseCase.Command(
                 user = user,
-                userId = dto.id
+                userId = dto.id!!
             )
         )
         return GetUserByIdMapper.toResponse(
@@ -114,9 +114,9 @@ class UserService(
     override fun createAdmin(dto: CreateAdminUserReq): CreateAdminUserRes {
         val result = this.createAdmin.execute(
             command = CreateAdminUserUseCase.Command(
-                secret = dto.secret,
-                username = dto.username,
-                password = dto.password
+                secret = dto.secret!!,
+                username = dto.username!!,
+                password = dto.password!!
             )
         )
         return CreateAdminUserMapper.toResponse(
@@ -125,7 +125,7 @@ class UserService(
     }
 
     override fun getAllUsers(dto: GetAllUserReq): GetAllUserRes {
-        val user = this.auth(dto.token)
+        val user = this.auth(dto.token!!)
         
         val result = this.getAll.execute(
             command = GetAllUsersUseCase.Command(

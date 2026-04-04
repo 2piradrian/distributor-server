@@ -11,9 +11,9 @@ object CreateUserMapper {
     ): CreateUserReq {
         return CreateUserReq(
             token = token,
-            username = payload["username"] as String,
-            password = payload["password"] as String,
-            role = payload["role"] as String
+            username = payload["username"] as? String,
+            password = payload["password"] as? String,
+            role = payload["role"] as? String
         )
     }
 

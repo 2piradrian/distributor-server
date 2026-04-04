@@ -10,9 +10,9 @@ object CreateAdminUserMapper {
         payload: Map<String, Any>
     ): CreateAdminUserReq {
         return CreateAdminUserReq(
-            secret = payload["secret"] as String,
-            username = payload["username"] as String,
-            password = payload["password"] as String
+            secret = payload["secret"] as? String,
+            username = payload["username"] as? String,
+            password = payload["password"] as? String
         )
     }
 

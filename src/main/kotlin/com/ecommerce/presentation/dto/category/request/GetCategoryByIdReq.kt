@@ -7,6 +7,6 @@ data class GetCategoryByIdReq(
     val token: String?,
 
     @field:NotBlank
-    val id: String
+    val id: String?
 
 )

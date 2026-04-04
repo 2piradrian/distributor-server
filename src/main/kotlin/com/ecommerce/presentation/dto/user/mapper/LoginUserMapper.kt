@@ -10,8 +10,8 @@ object LoginUserMapper {
         payload: Map<String, Any>
     ): LoginUserReq {
         return LoginUserReq(
-            username = payload["username"] as String,
-            password = payload["password"] as String
+            username = payload["username"] as? String,
+            password = payload["password"] as? String
         )
     }
 

@@ -23,20 +23,20 @@ class ProductService(
 ) : ProductServiceI {
 
     override fun create(dto: CreateProductReq): CreateProductRes {
-        val user: User = userService.auth(dto.token)
+        val user: User = userService.auth(dto.token!!)
 
         val result = create.execute(
             command = CreateProductUseCase.Command(
                 user = user,
-                name = dto.name,
-                description = dto.description,
-                price = dto.price,
+                name = dto.name!!,
+                description = dto.description!!,
+                price = dto.price!!,
                 offerPrice = dto.offerPrice,
-                stock = dto.stock,
-                categoryId = dto.categoryId,
+                stock = dto.stock!!,
+                categoryId = dto.categoryId!!,
                 mainImage = dto.mainImage,
                 images = dto.images,
-                isVisible = dto.isVisible
+                isVisible = dto.isVisible!!
             )
         )
 
@@ -46,21 +46,21 @@ class ProductService(
     }
 
     override fun update(dto: UpdateProductReq): UpdateProductRes {
-        val user: User = userService.auth(dto.token)
+        val user: User = userService.auth(dto.token!!)
 
         val result = update.execute(
             command = UpdateProductUseCase.Command(
                 user = user,
-                id = dto.id,
-                name = dto.name,
-                description = dto.description,
-                price = dto.price,
+                id = dto.id!!,
+                name = dto.name!!,
+                description = dto.description!!,
+                price = dto.price!!,
                 offerPrice = dto.offerPrice,
-                stock = dto.stock,
-                categoryId = dto.categoryId,
+                stock = dto.stock!!,
+                categoryId = dto.categoryId!!,
                 mainImage = dto.mainImage,
                 images = dto.images,
-                isVisible = dto.isVisible
+                isVisible = dto.isVisible!!
             )
         )
 
@@ -69,13 +69,13 @@ class ProductService(
         )
     }
 
-    override fun delete(token: String, id: String) {
-        val user: User = this.userService.auth(token)
+    override fun delete(dto: DeleteProductReq) {
+        val user: User = this.userService.auth(dto.token!!)
 
         this.delete.execute(
             command = DeleteProductUseCase.Command(
                 user = user,
-                id = id
+                id = dto.id!!
             )
         )
     }
@@ -86,7 +86,7 @@ class ProductService(
         val result = this.getById.execute(
             command = GetProductByIdUseCase.Command(
                 user = user,
-                id = dto.id
+                id = dto.id!!
             )
         )
 

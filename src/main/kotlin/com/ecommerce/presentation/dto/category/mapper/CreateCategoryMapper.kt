@@ -11,7 +11,7 @@ object CreateCategoryMapper {
     ): CreateCategoryReq {
         return CreateCategoryReq(
             token = token,
-            name = payload["name"] as String
+            name = payload["name"] as? String
         )
     }
 

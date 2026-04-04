@@ -5,9 +5,9 @@ import jakarta.validation.constraints.NotBlank
 data class DeleteCategoryReq(
 
     @field:NotBlank
-    val token: String,
+    val token: String?,
 
     @field:NotBlank
-    val id: String,
+    val id: String?,
 
 )

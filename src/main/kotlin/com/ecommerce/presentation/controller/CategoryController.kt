@@ -56,7 +56,8 @@ class CategoryController(
         @RequestHeader("Authorization") token: String,
         @RequestParam id: String
     ): ResponseEntity<*> {
-        service.delete(token, id)
+        val request = DeleteCategoryMapper.toRequest(token, id)
+        service.delete(request)
         return ResponseEntity.noContent().build<Any>()
     }
 

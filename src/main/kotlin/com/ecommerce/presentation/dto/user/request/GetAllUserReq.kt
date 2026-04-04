@@ -5,6 +5,6 @@ import jakarta.validation.constraints.NotBlank
 data class GetAllUserReq(
 
     @field:NotBlank
-    val token: String,
+    val token: String?
 
 )
