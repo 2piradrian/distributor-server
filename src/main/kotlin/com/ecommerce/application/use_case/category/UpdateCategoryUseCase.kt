@@ -18,7 +18,8 @@ class UpdateCategoryUseCase(
     data class Command(
         val user: User,
         val id: String,
-        val name: String
+        val name: String,
+        val slug: String
     )
 
     data class Result(
@@ -43,7 +44,7 @@ class UpdateCategoryUseCase(
         }
 
         // 4. Update the category.
-        category.update(command.name)
+        category.update(command.name, command.slug)
 
         // 5. Save the category.
         val saved = this.categoryRepository.save(category)

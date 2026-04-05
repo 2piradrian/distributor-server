@@ -15,6 +15,9 @@ class CategoryModel {
     @Column(nullable = false, unique = true)
     lateinit var name: String
 
+    @Column(nullable = false, unique = true)
+    lateinit var slug: String
+
     @Column(nullable = false, updatable = false)
     var createdAt: Date = Date()
 

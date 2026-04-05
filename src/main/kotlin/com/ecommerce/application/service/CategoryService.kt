@@ -28,7 +28,8 @@ class CategoryService(
         val result = this.create.execute(
             command = CreateCategoryUseCase.Command(
                 user = user,
-                name = dto.name!!
+                name = dto.name!!,
+                slug = dto.slug!!
             )
         )
 
@@ -44,7 +45,8 @@ class CategoryService(
             command = UpdateCategoryUseCase.Command(
                 user = user,
                 id = dto.id!!,
-                name = dto.name!!
+                name = dto.name!!,
+                slug = dto.slug!!
             )
         )
 

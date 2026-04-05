@@ -5,6 +5,7 @@ import java.util.Date
 interface CategoryFullProjection {
     fun getId(): String?
     fun getName(): String
+    fun getSlug(): String
     fun getCreatedAt(): Date
     fun getUpdatedAt(): Date
 }

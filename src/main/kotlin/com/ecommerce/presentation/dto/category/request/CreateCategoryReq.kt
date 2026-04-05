@@ -8,6 +8,9 @@ data class CreateCategoryReq(
     val token: String?,
 
     @field:NotBlank
-    val name: String?
+    val name: String?,
+
+    @field:NotBlank
+    val slug: String?
 
 )

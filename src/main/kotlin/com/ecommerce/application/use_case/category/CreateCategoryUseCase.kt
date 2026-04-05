@@ -18,7 +18,8 @@ class CreateCategoryUseCase(
 
     data class Command(
         val user: User,
-        val name: String
+        val name: String,
+        val slug: String
     )
 
     data class Result(
@@ -42,6 +43,7 @@ class CreateCategoryUseCase(
         val newCategory = Category(
             id = null,
             name = command.name,
+            slug = command.slug,
             createdAt = Date(),
             updatedAt = Date()
         )

@@ -13,7 +13,8 @@ object UpdateCategoryMapper {
         return UpdateCategoryReq(
             token = token,
             id = id,
-            name = payload["name"] as? String
+            name = payload["name"] as? String,
+            slug = payload["slug"] as? String
         )
     }
 

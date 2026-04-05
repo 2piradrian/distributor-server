@@ -17,6 +17,7 @@ object CategoryEntityMapper {
             Category(
                 id = it.id,
                 name = it.name,
+                slug = it.slug,
                 createdAt = it.createdAt,
                 updatedAt = it.updatedAt
             )
@@ -30,6 +31,7 @@ object CategoryEntityMapper {
             Category(
                 id = it.getId(),
                 name = it.getName(),
+                slug = it.getSlug(),
                 createdAt = it.getCreatedAt(),
                 updatedAt = it.getUpdatedAt()
             )
@@ -41,6 +43,7 @@ object CategoryEntityMapper {
             Category(
                 id = it.getId(),
                 name = it.getName(),
+                slug = it.getSlug(),
                 createdAt = null,
                 updatedAt = null
             )
@@ -52,6 +55,7 @@ object CategoryEntityMapper {
             Category(
                 id = it.getId(),
                 name = it.getName(),
+                slug = it.getSlug(),
                 createdAt = it.getCreatedAt(),
                 updatedAt = it.getUpdatedAt()
             )
@@ -63,6 +67,7 @@ object CategoryEntityMapper {
             Category(
                 id = it.getId(),
                 name = it.getName(),
+                slug = it.getSlug(),
                 createdAt = null,
                 updatedAt = null
             )
@@ -76,6 +81,7 @@ object CategoryEntityMapper {
             CategoryModel().apply {
                 id = it.id
                 name = it.name
+                slug = it.slug
                 createdAt = it.createdAt ?: Date()
                 updatedAt = it.updatedAt ?: Date()
             }

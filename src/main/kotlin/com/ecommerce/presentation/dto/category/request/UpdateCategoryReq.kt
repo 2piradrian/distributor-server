@@ -11,6 +11,9 @@ data class UpdateCategoryReq(
     val id: String?,
 
     @field:NotBlank
-    val name: String?
+    val name: String?,
+
+    @field:NotBlank
+    val slug: String?
 
 )
