@@ -1,17 +1,18 @@
 package com.ecommerce.presentation.dto.product.mapper
 
+import com.ecommerce.domain.entity.User
 import com.ecommerce.presentation.dto.product.request.UpdateProductReq
 import com.ecommerce.presentation.dto.product.response.UpdateProductRes
 
 object UpdateProductMapper {
 
     fun toRequest(
-        token: String,
+        user: User?,
         id: String,
         payload: Map<String, Any>
     ): UpdateProductReq {
         return UpdateProductReq(
-            token = token,
+            user = user,
             id = id,
             name = payload["name"] as? String,
             description = payload["description"] as? String,

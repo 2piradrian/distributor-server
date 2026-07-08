@@ -7,10 +7,10 @@ import com.ecommerce.presentation.dto.user.response.GetAllUserRes
 object GetAllUserMapper {
 
     fun toRequest(
-        token: String
+        user: User?
     ): GetAllUserReq {
         return GetAllUserReq(
-            token = token
+            user = user
         )
     }
 

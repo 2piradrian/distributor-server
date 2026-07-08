@@ -7,11 +7,11 @@ import com.ecommerce.presentation.dto.user.response.GetUserByIdRes
 object GetUserByIdMapper {
 
     fun toRequest(
-        token: String,
+        user: User?,
         id: String
     ): GetUserByIdReq {
         return GetUserByIdReq(
-            token = token,
+            user = user,
             id = id
         )
     }

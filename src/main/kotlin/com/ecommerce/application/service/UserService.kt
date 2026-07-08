@@ -4,6 +4,8 @@ import com.ecommerce.application.use_case.user.*
 import com.ecommerce.domain.entity.Role
 import com.ecommerce.domain.entity.Status
 import com.ecommerce.domain.entity.User
+import com.ecommerce.domain.error.ErrorHandler
+import com.ecommerce.domain.error.ErrorType
 import com.ecommerce.presentation.dto.user.mapper.*
 import com.ecommerce.presentation.dto.user.request.*
 import com.ecommerce.presentation.dto.user.response.*
@@ -22,29 +24,19 @@ class UserService(
     private val createAdmin: CreateAdminUserUseCase
 ) : UserServiceI {
 
-    override fun auth(token: String): User {
-        return authenticate.execute(
-            command = AuthenticateUserUseCase.Command(
-                token = token
-            )
-        ).user
-    }
-
     override fun auth(dto: AuthUserReq): AuthUserRes {
-        val result = this.authenticate.execute(
-            command = AuthenticateUserUseCase.Command(
-                token = dto.token!!
-            )
-        )
-        return AuthUserMapper.toResponse(
-            user = result.user
-        )
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
+        return AuthUserMapper.toResponse(user = user)
     }
 
     override fun tryAuth(token: String?): User? {
         if (token.isNullOrEmpty()) return null
         return try {
-            auth(token)
+            return authenticate.execute(
+                command = AuthenticateUserUseCase.Command(
+                    token = token
+                )
+            ).user
         }
         catch (e: Exception) {
             null
@@ -64,8 +56,8 @@ class UserService(
     }
 
     override fun create(dto: CreateUserReq): CreateUserRes {
-        val user = this.auth(dto.token!!)
-        
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
+
         val result = this.create.execute(
             command = CreateUserUseCase.Command(
                 user = user,
@@ -80,8 +72,8 @@ class UserService(
     }
 
     override fun update(dto: UpdateUserReq): UpdateUserRes {
-        val user = this.auth(dto.token!!)
-        
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
+
         val result = this.update.execute(
             command = UpdateUserUseCase.Command(
                 user = user,
@@ -98,8 +90,8 @@ class UserService(
     }
 
     override fun getById(dto: GetUserByIdReq): GetUserByIdRes {
-        val user = this.auth(dto.token!!)
-        
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
+
         val result = this.getById.execute(
             command = GetUserByIdUseCase.Command(
                 user = user,
@@ -125,8 +117,8 @@ class UserService(
     }
 
     override fun getAllUsers(dto: GetAllUserReq): GetAllUserRes {
-        val user = this.auth(dto.token!!)
-        
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
+
         val result = this.getAll.execute(
             command = GetAllUsersUseCase.Command(
                 user = user

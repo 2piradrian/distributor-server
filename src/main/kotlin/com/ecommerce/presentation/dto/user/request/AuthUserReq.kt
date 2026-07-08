@@ -1,10 +1,9 @@
 package com.ecommerce.presentation.dto.user.request
 
-import jakarta.validation.constraints.NotBlank
+import com.ecommerce.domain.entity.User
 
 data class AuthUserReq(
 
-    @field:NotBlank
-    val token: String?
+    val user: User?
 
 )

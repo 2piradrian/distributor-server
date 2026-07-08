@@ -1,15 +1,16 @@
 package com.ecommerce.presentation.dto.category.mapper
 
+import com.ecommerce.domain.entity.User
 import com.ecommerce.presentation.dto.category.request.DeleteCategoryReq
 
 object DeleteCategoryMapper {
 
     fun toRequest(
-        token: String,
+        user: User?,
         id: String
     ): DeleteCategoryReq {
         return DeleteCategoryReq(
-            token = token,
+            user = user,
             id = id
         )
     }

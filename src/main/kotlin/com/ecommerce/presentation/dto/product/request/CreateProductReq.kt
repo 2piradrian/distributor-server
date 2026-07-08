@@ -1,13 +1,13 @@
 package com.ecommerce.presentation.dto.product.request
 
+import com.ecommerce.domain.entity.User
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Positive
 
 data class CreateProductReq(
 
-    @field:NotBlank
-    val token: String?,
+    val user: User?,
 
     @field:NotBlank
     val name: String?,

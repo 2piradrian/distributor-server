@@ -2,6 +2,8 @@ package com.ecommerce.application.service
 
 import com.ecommerce.application.use_case.category.*
 import com.ecommerce.domain.entity.User
+import com.ecommerce.domain.error.ErrorHandler
+import com.ecommerce.domain.error.ErrorType
 import com.ecommerce.presentation.dto.category.mapper.*
 import com.ecommerce.presentation.dto.category.request.*
 import com.ecommerce.presentation.dto.category.response.*
@@ -11,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class CategoryService(
-    /* ==== Dependencies === */
-    private val userService: UserServiceI,
 
     /* ==== Use Cases === */
     private val create: CreateCategoryUseCase,
@@ -20,10 +20,11 @@ class CategoryService(
     private val delete: DeleteCategoryUseCase,
     private val getById: GetCategoryByIdUseCase,
     private val getAll: GetAllCategoriesUseCase
+
 ) : CategoryServiceI {
 
     override fun create(dto: CreateCategoryReq): CreateCategoryRes {
-        val user: User = this.userService.auth(dto.token!!)
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         val result = this.create.execute(
             command = CreateCategoryUseCase.Command(
@@ -39,7 +40,7 @@ class CategoryService(
     }
 
     override fun update(dto: UpdateCategoryReq): UpdateCategoryRes {
-        val user: User = this.userService.auth(dto.token!!)
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         val result = this.update.execute(
             command = UpdateCategoryUseCase.Command(
@@ -56,7 +57,7 @@ class CategoryService(
     }
 
     override fun delete(dto: DeleteCategoryReq) {
-        val user: User = this.userService.auth(dto.token!!)
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         this.delete.execute(
             command = DeleteCategoryUseCase.Command(
@@ -67,7 +68,7 @@ class CategoryService(
     }
 
     override fun getById(dto: GetCategoryByIdReq): GetCategoryByIdRes {
-        val user: User? = this.userService.tryAuth(dto.token)
+        val user: User? = dto.user
 
         val result = this.getById.execute(
             command = GetCategoryByIdUseCase.Command(
@@ -82,7 +83,7 @@ class CategoryService(
     }
 
     override fun getAll(dto: GetAllCategoriesReq): GetAllCategoriesRes {
-        val user: User? = this.userService.tryAuth(dto.token)
+        val user: User? = dto.user
 
         val result = this.getAll.execute(
             command = GetAllCategoriesUseCase.Command(

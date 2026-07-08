@@ -1,17 +1,18 @@
 package com.ecommerce.presentation.dto.category.mapper
 
 import com.ecommerce.domain.entity.Category
+import com.ecommerce.domain.entity.User
 import com.ecommerce.presentation.dto.category.request.GetCategoryByIdReq
 import com.ecommerce.presentation.dto.category.response.GetCategoryByIdRes
 
 object GetCategoryByIdMapper {
 
     fun toRequest(
-        token: String,
+        user: User?,
         id: String
     ): GetCategoryByIdReq {
         return GetCategoryByIdReq(
-            token = token,
+            user = user,
             id = id
         )
     }

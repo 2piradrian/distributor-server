@@ -2,6 +2,8 @@ package com.ecommerce.application.service
 
 import com.ecommerce.application.use_case.product.*
 import com.ecommerce.domain.entity.User
+import com.ecommerce.domain.error.ErrorHandler
+import com.ecommerce.domain.error.ErrorType
 import com.ecommerce.presentation.dto.product.mapper.*
 import com.ecommerce.presentation.dto.product.request.*
 import com.ecommerce.presentation.dto.product.response.*
@@ -11,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional
 class ProductService(
-    /* ==== Dependencies === */
-    private val userService: UserServiceI,
 
     /* ==== Use Cases === */
     private val create: CreateProductUseCase,
@@ -20,10 +20,11 @@ class ProductService(
     private val delete: DeleteProductUseCase,
     private val getById: GetProductByIdUseCase,
     private val getAll: GetAllProductsUseCase
+
 ) : ProductServiceI {
 
     override fun create(dto: CreateProductReq): CreateProductRes {
-        val user: User = userService.auth(dto.token!!)
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         val result = create.execute(
             command = CreateProductUseCase.Command(
@@ -46,7 +47,7 @@ class ProductService(
     }
 
     override fun update(dto: UpdateProductReq): UpdateProductRes {
-        val user: User = userService.auth(dto.token!!)
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         val result = update.execute(
             command = UpdateProductUseCase.Command(
@@ -70,7 +71,7 @@ class ProductService(
     }
 
     override fun delete(dto: DeleteProductReq) {
-        val user: User = this.userService.auth(dto.token!!)
+        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         this.delete.execute(
             command = DeleteProductUseCase.Command(
@@ -81,7 +82,7 @@ class ProductService(
     }
 
     override fun getById(dto: GetProductByIdReq): GetProductByIdRes {
-        val user: User? = this.userService.tryAuth(dto.token)
+        val user: User? = dto.user
 
         val result = this.getById.execute(
             command = GetProductByIdUseCase.Command(
@@ -96,7 +97,7 @@ class ProductService(
     }
 
     override fun getAll(dto: GetAllProductsReq): GetAllProductsRes {
-        val user: User? = this.userService.tryAuth(dto.token)
+        val user: User? = dto.user
 
         val result = this.getAll.execute(
             command = GetAllProductsUseCase.Command(

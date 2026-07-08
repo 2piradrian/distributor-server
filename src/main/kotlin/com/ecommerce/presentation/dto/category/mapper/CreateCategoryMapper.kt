@@ -1,16 +1,17 @@
 package com.ecommerce.presentation.dto.category.mapper
 
+import com.ecommerce.domain.entity.User
 import com.ecommerce.presentation.dto.category.request.CreateCategoryReq
 import com.ecommerce.presentation.dto.category.response.CreateCategoryRes
 
 object CreateCategoryMapper {
 
     fun toRequest(
-        token: String,
+        user: User?,
         payload: Map<String, Any>
     ): CreateCategoryReq {
         return CreateCategoryReq(
-            token = token,
+            user = user,
             name = payload["name"] as? String,
             slug = payload["slug"] as? String
         )

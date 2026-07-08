@@ -1,16 +1,17 @@
 package com.ecommerce.presentation.dto.category.mapper
 
 import com.ecommerce.domain.entity.Category
+import com.ecommerce.domain.entity.User
 import com.ecommerce.presentation.dto.category.request.GetAllCategoriesReq
 import com.ecommerce.presentation.dto.category.response.GetAllCategoriesRes
 
 object GetAllCategoriesMapper {
 
     fun toRequest(
-        token: String?
+        user: User?
     ): GetAllCategoriesReq {
         return GetAllCategoriesReq(
-            token = token
+            user = user
         )
     }
 

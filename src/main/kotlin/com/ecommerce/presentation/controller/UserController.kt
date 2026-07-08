@@ -1,6 +1,7 @@
 package com.ecommerce.presentation.controller
 
 import com.ecommerce.application.service.UserServiceI
+import com.ecommerce.domain.entity.User
 import com.ecommerce.presentation.dto.user.mapper.*
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -13,49 +14,49 @@ class UserController(
 
     @GetMapping
     fun getById(
-        @RequestHeader("Authorization") token: String,
+        @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String
     ): ResponseEntity<*> {
-        val request = GetUserByIdMapper.toRequest(token, id)
+        val request = GetUserByIdMapper.toRequest(user, id)
         val response = service.getById(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/all")
     fun getAll(
-        @RequestHeader("Authorization") token: String
+        @RequestAttribute("authenticatedUser") user: User?
     ): ResponseEntity<*> {
-        val request = GetAllUserMapper.toRequest(token)
+        val request = GetAllUserMapper.toRequest(user)
         val response = service.getAllUsers(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/auth")
     fun auth(
-        @RequestHeader("Authorization") token: String
+        @RequestAttribute("authenticatedUser") user: User?
     ): ResponseEntity<*> {
-        val request = AuthUserMapper.toRequest(token)
+        val request = AuthUserMapper.toRequest(user)
         val response = service.auth(request)
         return ResponseEntity.ok(response)
     }
 
     @PostMapping
     fun create(
-        @RequestHeader("Authorization") token: String,
+        @RequestAttribute("authenticatedUser") user: User?,
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
-        val request = CreateUserMapper.toRequest(token, payload)
+        val request = CreateUserMapper.toRequest(user, payload)
         val response = service.create(request)
         return ResponseEntity.status(201).body(response)
     }
 
     @PutMapping
     fun update(
-        @RequestHeader("Authorization") token: String,
+        @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String,
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
-        val request = UpdateUserMapper.toRequest(token, id, payload)
+        val request = UpdateUserMapper.toRequest(user, id, payload)
         val response = service.update(request)
         return ResponseEntity.ok(response)
     }

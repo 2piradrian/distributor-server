@@ -3,7 +3,6 @@ package com.ecommerce.core.helper
 import com.ecommerce.domain.entity.User
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -13,8 +12,8 @@ import javax.crypto.SecretKey
 
 @Component
 class JWTHelper(
-    @Value("\${application.jwt.secret}") val secret: String,
-    @Value("\${application.jwt.expiration}") val expiration: Long
+    @Value($$"${application.jwt.secret}") val secret: String,
+    @Value($$"${application.jwt.expiration}") val expiration: Long
 ) {
 
     private fun getSecretKey(): SecretKey {
@@ -34,11 +33,11 @@ class JWTHelper(
     }
 
     private fun parseToken(token: String): Claims {
-        return Jwts.parserBuilder()
-            .setSigningKey(getSecretKey())
+        return Jwts.parser()
+            .verifyWith(getSecretKey())
             .build()
-            .parseClaimsJws(token)
-            .body
+            .parseSignedClaims(token)
+            .payload
     }
 
     fun createToken(user: User): String {
@@ -46,10 +45,10 @@ class JWTHelper(
         val expirationDate = Date(now.time + expiration)
 
         return Jwts.builder()
-            .setSubject(user.id)
-            .setIssuedAt(now)
-            .setExpiration(expirationDate)
-            .signWith(getSecretKey(), SignatureAlgorithm.HS256)
+            .subject(user.id)
+            .issuedAt(now)
+            .expiration(expirationDate)
+            .signWith(getSecretKey())
             .compact()
     }
 

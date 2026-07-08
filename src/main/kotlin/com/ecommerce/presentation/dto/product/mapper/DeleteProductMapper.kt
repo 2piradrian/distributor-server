@@ -1,15 +1,16 @@
 package com.ecommerce.presentation.dto.product.mapper
 
+import com.ecommerce.domain.entity.User
 import com.ecommerce.presentation.dto.product.request.DeleteProductReq
 
 object DeleteProductMapper {
 
     fun toRequest(
-        token: String,
+        user: User?,
         id: String
     ): DeleteProductReq {
         return DeleteProductReq(
-            token = token,
+            user = user,
             id = id
         )
     }

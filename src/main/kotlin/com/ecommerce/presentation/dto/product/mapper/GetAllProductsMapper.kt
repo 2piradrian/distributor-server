@@ -1,6 +1,7 @@
 package com.ecommerce.presentation.dto.product.mapper
 
 import com.ecommerce.domain.entity.Product
+import com.ecommerce.domain.entity.User
 import com.ecommerce.domain.filters.ProductFilters
 import com.ecommerce.presentation.dto.product.request.GetAllProductsReq
 import com.ecommerce.presentation.dto.product.response.GetAllProductsRes
@@ -8,14 +9,14 @@ import com.ecommerce.presentation.dto.product.response.GetAllProductsRes
 object GetAllProductsMapper {
 
     fun toRequest(
-        token: String?,
+        user: User?,
         categoryId: String? = null,
         name: String? = null,
         minPrice: Double? = null,
         maxPrice: Double? = null
     ): GetAllProductsReq {
         return GetAllProductsReq(
-            token = token,
+            user = user,
             filters = ProductFilters(
                 categoryId = categoryId,
                 name = name,
