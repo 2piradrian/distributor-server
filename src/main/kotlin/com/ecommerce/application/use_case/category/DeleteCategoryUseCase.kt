@@ -15,16 +15,16 @@ class DeleteCategoryUseCase(
 ) {
 
     data class Command(
-        val user: User,
+        val user: User?,
         val id: String
     )
 
     fun execute(command: Command) {
 
         // 1. Validate the user role.
-        if (!command.user.isRole(Role.ADMIN)) {
-            throw ErrorHandler(ErrorType.UNAUTHORIZED)
-        }
+        command.user?.takeIf {
+            it.validatePermissions(Role.ADMIN)
+        } ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         // 2. Fetch the category.
         val category = this.categoryRepository.getBasicById(command.id)

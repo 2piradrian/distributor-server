@@ -17,7 +17,7 @@ class CreateCategoryUseCase(
 ) {
 
     data class Command(
-        val user: User,
+        val user: User?,
         val name: String,
         val slug: String
     )
@@ -29,9 +29,9 @@ class CreateCategoryUseCase(
     fun execute(command: Command): Result {
 
         // 1. Validate the user role.
-        if (!command.user.isRole(Role.ADMIN, Role.LOGISTICA)) {
-            throw ErrorHandler(ErrorType.UNAUTHORIZED)
-        }
+        command.user?.takeIf {
+            it.validatePermissions(Role.ADMIN)
+        } ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
         // 2. Check if a category with the same name already exists.
         val existingCategory = this.categoryRepository.getByName(command.name)

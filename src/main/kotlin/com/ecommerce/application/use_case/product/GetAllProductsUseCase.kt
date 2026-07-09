@@ -1,6 +1,7 @@
 package com.ecommerce.application.use_case.product
 
 import com.ecommerce.domain.entity.Product
+import com.ecommerce.domain.entity.Role
 import com.ecommerce.domain.entity.User
 import com.ecommerce.domain.filters.ProductFilters
 import com.ecommerce.domain.repository.ProductRepositoryI
@@ -24,17 +25,12 @@ class GetAllProductsUseCase(
 
     fun execute(command: Command): Result {
 
-        val filters = if (command.user == null) {
-            (command.filters ?: ProductFilters()).copy(isVisible = true)
-        } else {
-            command.filters
-        }
-
         // 1. Fetch all products with filters.
-        val products = if (command.user != null) {
-            productRepository.getAll(filters)
-        } else {
-            productRepository.getAllPublic(filters)
+        val products = if (command.user?.validatePermissions(Role.ADMIN) ?: false) {
+            productRepository.getAll(command.filters)
+        }
+        else {
+            productRepository.getAllPublic(command.filters)
         }
 
         // 2. End of Use Case.

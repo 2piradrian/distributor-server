@@ -20,6 +20,10 @@ class User(
         return status == Status.ACTIVE
     }
 
+    fun validatePermissions(vararg roles: Role): Boolean {
+        return this.isActive() && this.isRole(*roles)
+    }
+
     fun update(
         username: String,
         hashedPassword: String,

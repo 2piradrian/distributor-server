@@ -1,6 +1,7 @@
 package com.ecommerce.application.use_case.category
 
 import com.ecommerce.domain.entity.Category
+import com.ecommerce.domain.entity.Role
 import com.ecommerce.domain.entity.User
 import com.ecommerce.domain.error.ErrorHandler
 import com.ecommerce.domain.error.ErrorType
@@ -26,7 +27,7 @@ class GetCategoryByIdUseCase(
     fun execute(command: Command): Result {
 
         // 1. Fetch the category.
-        val category = if (command.user != null) {
+        val category = if (command.user?.validatePermissions(Role.ADMIN) ?: false) {
             this.categoryRepository.getById(command.id)
         }
         else {

@@ -1,6 +1,7 @@
 package com.ecommerce.application.use_case.product
 
 import com.ecommerce.domain.entity.Product
+import com.ecommerce.domain.entity.Role
 import com.ecommerce.domain.entity.User
 import com.ecommerce.domain.error.ErrorHandler
 import com.ecommerce.domain.error.ErrorType
@@ -26,9 +27,10 @@ class GetProductByIdUseCase(
     fun execute(command: Command): Result {
 
         // 1. Fetch the product.
-        val product = if (command.user != null) {
+        val product = if (command.user?.validatePermissions(Role.ADMIN) ?: false) {
             productRepository.getById(command.id)
-        } else {
+        }
+        else {
             productRepository.getPublicById(command.id)
         } ?: throw ErrorHandler(ErrorType.PRODUCT_NOT_FOUND)
 

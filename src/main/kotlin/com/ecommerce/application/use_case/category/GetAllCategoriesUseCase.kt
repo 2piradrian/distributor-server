@@ -1,6 +1,7 @@
 package com.ecommerce.application.use_case.category
 
 import com.ecommerce.domain.entity.Category
+import com.ecommerce.domain.entity.Role
 import com.ecommerce.domain.entity.User
 import com.ecommerce.domain.repository.CategoryRepositoryI
 import org.springframework.stereotype.Component
@@ -23,7 +24,7 @@ class GetAllCategoriesUseCase(
     fun execute(command: Command): Result {
 
         // 1. Fetch all categories.
-        val categories = if (command.user != null) {
+        val categories = if (command.user?.validatePermissions(Role.ADMIN) ?: false) {
             this.categoryRepository.getAllBasic()
         }
         else {

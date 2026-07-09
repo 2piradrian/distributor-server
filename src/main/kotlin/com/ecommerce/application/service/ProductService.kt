@@ -24,11 +24,9 @@ class ProductService(
 ) : ProductServiceI {
 
     override fun create(dto: CreateProductReq): CreateProductRes {
-        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
-
         val result = create.execute(
             command = CreateProductUseCase.Command(
-                user = user,
+                user = dto.user,
                 name = dto.name!!,
                 description = dto.description!!,
                 price = dto.price!!,
@@ -47,11 +45,9 @@ class ProductService(
     }
 
     override fun update(dto: UpdateProductReq): UpdateProductRes {
-        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
-
         val result = update.execute(
             command = UpdateProductUseCase.Command(
-                user = user,
+                user = dto.user,
                 id = dto.id!!,
                 name = dto.name!!,
                 description = dto.description!!,
@@ -71,22 +67,18 @@ class ProductService(
     }
 
     override fun delete(dto: DeleteProductReq) {
-        val user: User = dto.user ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
-
         this.delete.execute(
             command = DeleteProductUseCase.Command(
-                user = user,
+                user = dto.user,
                 id = dto.id!!
             )
         )
     }
 
     override fun getById(dto: GetProductByIdReq): GetProductByIdRes {
-        val user: User? = dto.user
-
         val result = this.getById.execute(
             command = GetProductByIdUseCase.Command(
-                user = user,
+                user = dto.user,
                 id = dto.id!!
             )
         )
@@ -97,11 +89,9 @@ class ProductService(
     }
 
     override fun getAll(dto: GetAllProductsReq): GetAllProductsRes {
-        val user: User? = dto.user
-
         val result = this.getAll.execute(
             command = GetAllProductsUseCase.Command(
-                user = user,
+                user = dto.user,
                 filters = dto.filters
             )
         )
