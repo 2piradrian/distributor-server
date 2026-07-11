@@ -10,6 +10,8 @@ interface CategoryServiceI {
     fun create(@Valid dto: CreateCategoryReq): CreateCategoryRes
     fun update(@Valid dto: UpdateCategoryReq): UpdateCategoryRes
     fun delete(@Valid dto: DeleteCategoryReq)
-    fun getById(@Valid dto: GetCategoryByIdReq): GetCategoryByIdRes
-    fun getAll(@Valid dto: GetAllCategoriesReq): GetAllCategoriesRes
+    fun getShopById(@Valid dto: GetCategoryByIdReq): GetCategoryByIdRes
+    fun getShopCatalog(@Valid dto: GetAllCategoriesReq): GetAllCategoriesRes
+    fun getBackofficeById(@Valid dto: GetCategoryByIdReq): GetCategoryByIdRes
+    fun getBackofficeCatalog(@Valid dto: GetAllCategoriesReq): GetAllCategoriesRes
 }

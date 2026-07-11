@@ -18,8 +18,10 @@ class ProductService(
     private val create: CreateProductUseCase,
     private val update: UpdateProductUseCase,
     private val delete: DeleteProductUseCase,
-    private val getById: GetProductByIdUseCase,
-    private val getAll: GetAllProductsUseCase
+    private val getShopById: GetShopProductByIdUseCase,
+    private val getShopCatalog: GetShopProductsCatalogUseCase,
+    private val getBackofficeById: GetBackofficeProductByIdUseCase,
+    private val getBackofficeCatalog: GetBackofficeProductsCatalogUseCase
 
 ) : ProductServiceI {
 
@@ -75,9 +77,33 @@ class ProductService(
         )
     }
 
-    override fun getById(dto: GetProductByIdReq): GetProductByIdRes {
-        val result = this.getById.execute(
-            command = GetProductByIdUseCase.Command(
+    override fun getShopById(dto: GetProductByIdReq): GetProductByIdRes {
+        val result = this.getShopById.execute(
+            command = GetShopProductByIdUseCase.Command(
+                id = dto.id!!
+            )
+        )
+
+        return GetProductByIdMapper.toResponse(
+            product = result.product
+        )
+    }
+
+    override fun getShopCatalog(dto: GetAllProductsReq): GetAllProductsRes {
+        val result = this.getShopCatalog.execute(
+            command = GetShopProductsCatalogUseCase.Command(
+                filters = dto.filters
+            )
+        )
+
+        return GetAllProductsMapper.toResponse(
+            products = result.products
+        )
+    }
+
+    override fun getBackofficeById(dto: GetProductByIdReq): GetProductByIdRes {
+        val result = this.getBackofficeById.execute(
+            command = GetBackofficeProductByIdUseCase.Command(
                 user = dto.user,
                 id = dto.id!!
             )
@@ -88,9 +114,9 @@ class ProductService(
         )
     }
 
-    override fun getAll(dto: GetAllProductsReq): GetAllProductsRes {
-        val result = this.getAll.execute(
-            command = GetAllProductsUseCase.Command(
+    override fun getBackofficeCatalog(dto: GetAllProductsReq): GetAllProductsRes {
+        val result = this.getBackofficeCatalog.execute(
+            command = GetBackofficeProductsCatalogUseCase.Command(
                 user = dto.user,
                 filters = dto.filters
             )

@@ -12,18 +12,43 @@ class ProductController(
     private val service: ProductServiceI
 ) {
 
-    @GetMapping
-    fun getById(
+    // === SHOP PATHS ===
+
+    @GetMapping("/shop")
+    fun getShopById(
+        @RequestParam id: String
+    ): ResponseEntity<*> {
+        val request = GetProductByIdMapper.toRequest(null, id)
+        val response = this.service.getShopById(request)
+        return ResponseEntity.ok(response)
+    }
+
+    @GetMapping("/shop/catalog")
+    fun getShopCatalog(
+        @RequestParam(required = false) categoryId: String?,
+        @RequestParam(required = false) name: String?,
+        @RequestParam(required = false) minPrice: Double?,
+        @RequestParam(required = false) maxPrice: Double?
+    ): ResponseEntity<*> {
+        val request = GetAllProductsMapper.toRequest(null, categoryId, name, minPrice, maxPrice)
+        val response = this.service.getShopCatalog(request)
+        return ResponseEntity.ok(response)
+    }
+
+    // === BACKOFFICE PATHS ===
+
+    @GetMapping("/backoffice")
+    fun getBackofficeById(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = GetProductByIdMapper.toRequest(user, id)
-        val response = service.getById(request)
+        val response = this.service.getBackofficeById(request)
         return ResponseEntity.ok(response)
     }
 
-    @GetMapping("/all")
-    fun getAll(
+    @GetMapping("/backoffice/catalog")
+    fun getBackofficeCatalog(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam(required = false) categoryId: String?,
         @RequestParam(required = false) name: String?,
@@ -31,38 +56,38 @@ class ProductController(
         @RequestParam(required = false) maxPrice: Double?
     ): ResponseEntity<*> {
         val request = GetAllProductsMapper.toRequest(user, categoryId, name, minPrice, maxPrice)
-        val response = service.getAll(request)
+        val response = this.service.getBackofficeCatalog(request)
         return ResponseEntity.ok(response)
     }
 
-    @PostMapping
+    @PostMapping("/backoffice")
     fun create(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = CreateProductMapper.toRequest(user, payload)
-        val response = service.create(request)
+        val response = this.service.create(request)
         return ResponseEntity.status(201).body(response)
     }
 
-    @PutMapping
+    @PutMapping("/backoffice")
     fun update(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String,
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = UpdateProductMapper.toRequest(user, id, payload)
-        val response = service.update(request)
+        val response = this.service.update(request)
         return ResponseEntity.ok(response)
     }
 
-    @DeleteMapping
+    @DeleteMapping("/backoffice")
     fun delete(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = DeleteProductMapper.toRequest(user, id)
-        service.delete(request)
+        this.service.delete(request)
         return ResponseEntity.noContent().build<Any>()
     }
 

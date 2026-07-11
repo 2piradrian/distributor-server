@@ -1,8 +1,6 @@
 package com.ecommerce.application.use_case.category
 
 import com.ecommerce.domain.entity.Category
-import com.ecommerce.domain.entity.Role
-import com.ecommerce.domain.entity.User
 import com.ecommerce.domain.error.ErrorHandler
 import com.ecommerce.domain.error.ErrorType
 import com.ecommerce.domain.repository.CategoryRepositoryI
@@ -11,12 +9,11 @@ import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Transactional
-class GetCategoryByIdUseCase(
+class GetShopCategoryByIdUseCase(
     private val categoryRepository: CategoryRepositoryI
 ) {
 
     data class Command(
-        val user: User?,
         val id: String
     )
 
@@ -25,18 +22,9 @@ class GetCategoryByIdUseCase(
     )
 
     fun execute(command: Command): Result {
+        val category = categoryRepository.getPublicById(command.id)
+            ?: throw ErrorHandler(ErrorType.CATEGORY_NOT_FOUND)
 
-        // 1. Fetch the category.
-        val category = if (command.user?.validatePermissions(Role.ADMIN) ?: false) {
-            this.categoryRepository.getById(command.id)
-        }
-        else {
-            this.categoryRepository.getPublicById(command.id)
-        } ?: throw ErrorHandler(ErrorType.CATEGORY_NOT_FOUND)
-
-        // 2. End of Use Case.
-        return Result(
-            category = category
-        )
+        return Result(category = category)
     }
 }

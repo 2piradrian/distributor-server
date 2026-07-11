@@ -3,13 +3,15 @@ package com.ecommerce.application.use_case.category
 import com.ecommerce.domain.entity.Category
 import com.ecommerce.domain.entity.Role
 import com.ecommerce.domain.entity.User
+import com.ecommerce.domain.error.ErrorHandler
+import com.ecommerce.domain.error.ErrorType
 import com.ecommerce.domain.repository.CategoryRepositoryI
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 @Component
 @Transactional
-class GetAllCategoriesUseCase(
+class GetBackofficeCategoriesCatalogUseCase(
     private val categoryRepository: CategoryRepositoryI
 ) {
 
@@ -22,18 +24,12 @@ class GetAllCategoriesUseCase(
     )
 
     fun execute(command: Command): Result {
+        // Validate user permissions for backoffice access
+        command.user?.takeIf {
+            it.validatePermissions(Role.ADMIN, Role.LOGISTICA, Role.COMERCIAL)
+        } ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
-        // 1. Fetch all categories.
-        val categories = if (command.user?.validatePermissions(Role.ADMIN) ?: false) {
-            this.categoryRepository.getAllBasic()
-        }
-        else {
-            this.categoryRepository.getAllPublicBasic()
-        }
-
-        // 2. End of Use Case.
-        return Result(
-            categories = categories
-        )
+        val categories = categoryRepository.getAllBasic()
+        return Result(categories = categories)
     }
 }

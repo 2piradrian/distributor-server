@@ -10,6 +10,8 @@ interface ProductServiceI {
     fun create(@Valid dto: CreateProductReq): CreateProductRes
     fun update(@Valid dto: UpdateProductReq): UpdateProductRes
     fun delete(@Valid dto: DeleteProductReq)
-    fun getById(@Valid dto: GetProductByIdReq): GetProductByIdRes
-    fun getAll(@Valid dto: GetAllProductsReq): GetAllProductsRes
+    fun getShopById(@Valid dto: GetProductByIdReq): GetProductByIdRes
+    fun getShopCatalog(@Valid dto: GetAllProductsReq): GetAllProductsRes
+    fun getBackofficeById(@Valid dto: GetProductByIdReq): GetProductByIdRes
+    fun getBackofficeCatalog(@Valid dto: GetAllProductsReq): GetAllProductsRes
 }

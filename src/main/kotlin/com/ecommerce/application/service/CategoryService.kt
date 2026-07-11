@@ -18,8 +18,10 @@ class CategoryService(
     private val create: CreateCategoryUseCase,
     private val update: UpdateCategoryUseCase,
     private val delete: DeleteCategoryUseCase,
-    private val getById: GetCategoryByIdUseCase,
-    private val getAll: GetAllCategoriesUseCase
+    private val getShopById: GetShopCategoryByIdUseCase,
+    private val getShopCatalog: GetShopCategoriesCatalogUseCase,
+    private val getBackofficeById: GetBackofficeCategoryByIdUseCase,
+    private val getBackofficeCatalog: GetBackofficeCategoriesCatalogUseCase
 
 ) : CategoryServiceI {
 
@@ -61,9 +63,31 @@ class CategoryService(
         )
     }
 
-    override fun getById(dto: GetCategoryByIdReq): GetCategoryByIdRes {
-        val result = this.getById.execute(
-            command = GetCategoryByIdUseCase.Command(
+    override fun getShopById(dto: GetCategoryByIdReq): GetCategoryByIdRes {
+        val result = this.getShopById.execute(
+            command = GetShopCategoryByIdUseCase.Command(
+                id = dto.id!!
+            )
+        )
+
+        return GetCategoryByIdMapper.toResponse(
+            category = result.category
+        )
+    }
+
+    override fun getShopCatalog(dto: GetAllCategoriesReq): GetAllCategoriesRes {
+        val result = this.getShopCatalog.execute(
+            command = GetShopCategoriesCatalogUseCase.Command()
+        )
+
+        return GetAllCategoriesMapper.toResponse(
+            categories = result.categories
+        )
+    }
+
+    override fun getBackofficeById(dto: GetCategoryByIdReq): GetCategoryByIdRes {
+        val result = this.getBackofficeById.execute(
+            command = GetBackofficeCategoryByIdUseCase.Command(
                 user = dto.user,
                 id = dto.id!!
             )
@@ -74,9 +98,9 @@ class CategoryService(
         )
     }
 
-    override fun getAll(dto: GetAllCategoriesReq): GetAllCategoriesRes {
-        val result = this.getAll.execute(
-            command = GetAllCategoriesUseCase.Command(
+    override fun getBackofficeCatalog(dto: GetAllCategoriesReq): GetAllCategoriesRes {
+        val result = this.getBackofficeCatalog.execute(
+            command = GetBackofficeCategoriesCatalogUseCase.Command(
                 user = dto.user
             )
         )
