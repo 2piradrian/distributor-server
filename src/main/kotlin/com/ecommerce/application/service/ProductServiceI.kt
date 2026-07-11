@@ -7,11 +7,11 @@ import org.springframework.validation.annotation.Validated
 
 @Validated
 interface ProductServiceI {
-    fun create(@Valid dto: CreateProductReq): CreateProductRes
-    fun update(@Valid dto: UpdateProductReq): UpdateProductRes
-    fun delete(@Valid dto: DeleteProductReq)
-    fun getShopById(@Valid dto: GetProductByIdReq): GetProductByIdRes
-    fun getShopCatalog(@Valid dto: GetAllProductsReq): GetAllProductsRes
-    fun getBackofficeById(@Valid dto: GetProductByIdReq): GetProductByIdRes
-    fun getBackofficeCatalog(@Valid dto: GetAllProductsReq): GetAllProductsRes
+    fun createProduct(@Valid dto: CreateBackofficeProductReq): CreateBackofficeProductRes
+    fun updateProduct(@Valid dto: UpdateBackofficeProductReq): UpdateBackofficeProductRes
+    fun deleteProduct(@Valid dto: DeleteBackofficeProductReq)
+    fun getShopProductById(@Valid dto: GetShopProductByIdReq): GetShopProductByIdRes
+    fun getAllShopProducts(@Valid dto: GetAllShopProductsReq): GetAllShopProductsRes
+    fun getBackofficeProductById(@Valid dto: GetBackofficeProductByIdReq): GetBackofficeProductByIdRes
+    fun getAllBackofficeProducts(@Valid dto: GetAllBackofficeProductsReq): GetAllBackofficeProductsRes
 }

@@ -7,11 +7,11 @@ import org.springframework.validation.annotation.Validated
 
 @Validated
 interface CategoryServiceI {
-    fun create(@Valid dto: CreateCategoryReq): CreateCategoryRes
-    fun update(@Valid dto: UpdateCategoryReq): UpdateCategoryRes
-    fun delete(@Valid dto: DeleteCategoryReq)
-    fun getShopById(@Valid dto: GetCategoryByIdReq): GetCategoryByIdRes
-    fun getShopCatalog(@Valid dto: GetAllCategoriesReq): GetAllCategoriesRes
-    fun getBackofficeById(@Valid dto: GetCategoryByIdReq): GetCategoryByIdRes
-    fun getBackofficeCatalog(@Valid dto: GetAllCategoriesReq): GetAllCategoriesRes
+    fun createCategory(@Valid dto: CreateBackofficeCategoryReq): CreateBackofficeCategoryRes
+    fun updateCategory(@Valid dto: UpdateBackofficeCategoryReq): UpdateBackofficeCategoryRes
+    fun deleteCategory(@Valid dto: DeleteBackofficeCategoryReq)
+    fun getShopCategoryById(@Valid dto: GetShopCategoryByIdReq): GetShopCategoryByIdRes
+    fun getAllShopCategories(@Valid dto: GetAllShopCategoriesReq): GetAllShopCategoriesRes
+    fun getBackofficeCategoryById(@Valid dto: GetBackofficeCategoryByIdReq): GetBackofficeCategoryByIdRes
+    fun getAllBackofficeCategories(@Valid dto: GetAllBackofficeCategoriesReq): GetAllBackofficeCategoriesRes
 }

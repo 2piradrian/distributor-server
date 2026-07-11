@@ -15,79 +15,79 @@ class ProductController(
     // === SHOP PATHS ===
 
     @GetMapping("/shop")
-    fun getShopById(
+    fun getShopProductById(
         @RequestParam id: String
     ): ResponseEntity<*> {
-        val request = GetProductByIdMapper.toRequest(null, id)
-        val response = this.service.getShopById(request)
+        val request = GetShopProductByIdMapper.toRequest(id)
+        val response = this.service.getShopProductById(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/shop/catalog")
-    fun getShopCatalog(
+    fun getAllShopProducts(
         @RequestParam(required = false) categoryId: String?,
         @RequestParam(required = false) name: String?,
         @RequestParam(required = false) minPrice: Double?,
         @RequestParam(required = false) maxPrice: Double?
     ): ResponseEntity<*> {
-        val request = GetAllProductsMapper.toRequest(null, categoryId, name, minPrice, maxPrice)
-        val response = this.service.getShopCatalog(request)
+        val request = GetAllShopProductsMapper.toRequest(categoryId, name, minPrice, maxPrice)
+        val response = this.service.getAllShopProducts(request)
         return ResponseEntity.ok(response)
     }
 
     // === BACKOFFICE PATHS ===
 
     @GetMapping("/backoffice")
-    fun getBackofficeById(
+    fun getBackofficeProductById(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String
     ): ResponseEntity<*> {
-        val request = GetProductByIdMapper.toRequest(user, id)
-        val response = this.service.getBackofficeById(request)
+        val request = GetBackofficeProductByIdMapper.toRequest(user, id)
+        val response = this.service.getBackofficeProductById(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/backoffice/catalog")
-    fun getBackofficeCatalog(
+    fun getAllBackofficeProducts(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam(required = false) categoryId: String?,
         @RequestParam(required = false) name: String?,
         @RequestParam(required = false) minPrice: Double?,
         @RequestParam(required = false) maxPrice: Double?
     ): ResponseEntity<*> {
-        val request = GetAllProductsMapper.toRequest(user, categoryId, name, minPrice, maxPrice)
-        val response = this.service.getBackofficeCatalog(request)
+        val request = GetAllBackofficeProductsMapper.toRequest(user, categoryId, name, minPrice, maxPrice)
+        val response = this.service.getAllBackofficeProducts(request)
         return ResponseEntity.ok(response)
     }
 
     @PostMapping("/backoffice")
-    fun create(
+    fun createProduct(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
-        val request = CreateProductMapper.toRequest(user, payload)
-        val response = this.service.create(request)
+        val request = CreateBackofficeProductMapper.toRequest(user, payload)
+        val response = this.service.createProduct(request)
         return ResponseEntity.status(201).body(response)
     }
 
     @PutMapping("/backoffice")
-    fun update(
+    fun updateProduct(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String,
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
-        val request = UpdateProductMapper.toRequest(user, id, payload)
-        val response = this.service.update(request)
+        val request = UpdateBackofficeProductMapper.toRequest(user, id, payload)
+        val response = this.service.updateProduct(request)
         return ResponseEntity.ok(response)
     }
 
     @DeleteMapping("/backoffice")
-    fun delete(
+    fun deleteProduct(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String
     ): ResponseEntity<*> {
-        val request = DeleteProductMapper.toRequest(user, id)
-        this.service.delete(request)
+        val request = DeleteBackofficeProductMapper.toRequest(user, id)
+        this.service.deleteProduct(request)
         return ResponseEntity.noContent().build<Any>()
     }
 

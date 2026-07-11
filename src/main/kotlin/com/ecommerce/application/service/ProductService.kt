@@ -25,7 +25,7 @@ class ProductService(
 
 ) : ProductServiceI {
 
-    override fun create(dto: CreateProductReq): CreateProductRes {
+    override fun createProduct(dto: CreateBackofficeProductReq): CreateBackofficeProductRes {
         val result = create.execute(
             command = CreateProductUseCase.Command(
                 user = dto.user,
@@ -41,12 +41,12 @@ class ProductService(
             )
         )
 
-        return CreateProductMapper.toResponse(
+        return CreateBackofficeProductMapper.toResponse(
             id = result.product.id!!
         )
     }
 
-    override fun update(dto: UpdateProductReq): UpdateProductRes {
+    override fun updateProduct(dto: UpdateBackofficeProductReq): UpdateBackofficeProductRes {
         val result = update.execute(
             command = UpdateProductUseCase.Command(
                 user = dto.user,
@@ -63,12 +63,12 @@ class ProductService(
             )
         )
 
-        return UpdateProductMapper.toResponse(
+        return UpdateBackofficeProductMapper.toResponse(
             id = result.product.id!!
         )
     }
 
-    override fun delete(dto: DeleteProductReq) {
+    override fun deleteProduct(dto: DeleteBackofficeProductReq) {
         this.delete.execute(
             command = DeleteProductUseCase.Command(
                 user = dto.user,
@@ -77,44 +77,44 @@ class ProductService(
         )
     }
 
-    override fun getShopById(dto: GetProductByIdReq): GetProductByIdRes {
+    override fun getShopProductById(dto: GetShopProductByIdReq): GetShopProductByIdRes {
         val result = this.getShopById.execute(
             command = GetShopProductByIdUseCase.Command(
-                id = dto.id!!
+                id = dto.id
             )
         )
 
-        return GetProductByIdMapper.toResponse(
+        return GetShopProductByIdMapper.toResponse(
             product = result.product
         )
     }
 
-    override fun getShopCatalog(dto: GetAllProductsReq): GetAllProductsRes {
+    override fun getAllShopProducts(dto: GetAllShopProductsReq): GetAllShopProductsRes {
         val result = this.getShopCatalog.execute(
             command = GetShopProductsCatalogUseCase.Command(
                 filters = dto.filters
             )
         )
 
-        return GetAllProductsMapper.toResponse(
+        return GetAllShopProductsMapper.toResponse(
             products = result.products
         )
     }
 
-    override fun getBackofficeById(dto: GetProductByIdReq): GetProductByIdRes {
+    override fun getBackofficeProductById(dto: GetBackofficeProductByIdReq): GetBackofficeProductByIdRes {
         val result = this.getBackofficeById.execute(
             command = GetBackofficeProductByIdUseCase.Command(
                 user = dto.user,
-                id = dto.id!!
+                id = dto.id
             )
         )
 
-        return GetProductByIdMapper.toResponse(
+        return GetBackofficeProductByIdMapper.toResponse(
             product = result.product
         )
     }
 
-    override fun getBackofficeCatalog(dto: GetAllProductsReq): GetAllProductsRes {
+    override fun getAllBackofficeProducts(dto: GetAllBackofficeProductsReq): GetAllBackofficeProductsRes {
         val result = this.getBackofficeCatalog.execute(
             command = GetBackofficeProductsCatalogUseCase.Command(
                 user = dto.user,
@@ -122,7 +122,7 @@ class ProductService(
             )
         )
 
-        return GetAllProductsMapper.toResponse(
+        return GetAllBackofficeProductsMapper.toResponse(
             products = result.products
         )
     }

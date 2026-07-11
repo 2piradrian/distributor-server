@@ -25,7 +25,7 @@ class CategoryService(
 
 ) : CategoryServiceI {
 
-    override fun create(dto: CreateCategoryReq): CreateCategoryRes {
+    override fun createCategory(dto: CreateBackofficeCategoryReq): CreateBackofficeCategoryRes {
         val result = this.create.execute(
             command = CreateCategoryUseCase.Command(
                 user = dto.user,
@@ -34,12 +34,12 @@ class CategoryService(
             )
         )
 
-        return CreateCategoryMapper.toResponse(
+        return CreateBackofficeCategoryMapper.toResponse(
             id = result.category.id!!
         )
     }
 
-    override fun update(dto: UpdateCategoryReq): UpdateCategoryRes {
+    override fun updateCategory(dto: UpdateBackofficeCategoryReq): UpdateBackofficeCategoryRes {
         val result = this.update.execute(
             command = UpdateCategoryUseCase.Command(
                 user = dto.user,
@@ -49,12 +49,12 @@ class CategoryService(
             )
         )
 
-        return UpdateCategoryMapper.toResponse(
+        return UpdateBackofficeCategoryMapper.toResponse(
             id = result.category.id!!
         )
     }
 
-    override fun delete(dto: DeleteCategoryReq) {
+    override fun deleteCategory(dto: DeleteBackofficeCategoryReq) {
         this.delete.execute(
             command = DeleteCategoryUseCase.Command(
                 user = dto.user,
@@ -63,48 +63,47 @@ class CategoryService(
         )
     }
 
-    override fun getShopById(dto: GetCategoryByIdReq): GetCategoryByIdRes {
+    override fun getShopCategoryById(dto: GetShopCategoryByIdReq): GetShopCategoryByIdRes {
         val result = this.getShopById.execute(
             command = GetShopCategoryByIdUseCase.Command(
-                id = dto.id!!
+                id = dto.id
             )
         )
 
-        return GetCategoryByIdMapper.toResponse(
+        return GetShopCategoryByIdMapper.toResponse(
             category = result.category
         )
     }
 
-    override fun getShopCatalog(dto: GetAllCategoriesReq): GetAllCategoriesRes {
-        // TODO: MODIFY NAME: CATALOG
+    override fun getAllShopCategories(dto: GetAllShopCategoriesReq): GetAllShopCategoriesRes {
         val result = this.getShopCatalog.execute()
 
-        return GetAllCategoriesMapper.toResponse(
+        return GetAllShopCategoriesMapper.toResponse(
             categories = result.categories
         )
     }
 
-    override fun getBackofficeById(dto: GetCategoryByIdReq): GetCategoryByIdRes {
+    override fun getBackofficeCategoryById(dto: GetBackofficeCategoryByIdReq): GetBackofficeCategoryByIdRes {
         val result = this.getBackofficeById.execute(
             command = GetBackofficeCategoryByIdUseCase.Command(
                 user = dto.user,
-                id = dto.id!!
+                id = dto.id
             )
         )
 
-        return GetCategoryByIdMapper.toResponse(
+        return GetBackofficeCategoryByIdMapper.toResponse(
             category = result.category
         )
     }
 
-    override fun getBackofficeCatalog(dto: GetAllCategoriesReq): GetAllCategoriesRes {
+    override fun getAllBackofficeCategories(dto: GetAllBackofficeCategoriesReq): GetAllBackofficeCategoriesRes {
         val result = this.getBackofficeCatalog.execute(
             command = GetBackofficeCategoriesCatalogUseCase.Command(
                 user = dto.user
             )
         )
 
-        return GetAllCategoriesMapper.toResponse(
+        return GetAllBackofficeCategoriesMapper.toResponse(
             categories = result.categories
         )
     }

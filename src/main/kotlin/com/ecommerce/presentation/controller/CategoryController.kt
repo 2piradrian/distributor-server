@@ -15,70 +15,70 @@ class CategoryController(
     // === SHOP PATHS ===
 
     @GetMapping("/shop")
-    fun getShopById(
+    fun getShopCategoryById(
         @RequestParam id: String
     ): ResponseEntity<*> {
-        val request = GetCategoryByIdMapper.toRequest(null, id)
-        val response = this.service.getShopById(request)
+        val request = GetShopCategoryByIdMapper.toRequest(id)
+        val response = this.service.getShopCategoryById(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/shop/catalog")
-    fun getShopCatalog(): ResponseEntity<*> {
-        val request = GetAllCategoriesMapper.toRequest(null)
-        val response = service.getShopCatalog(request)
+    fun getAllShopCategories(): ResponseEntity<*> {
+        val request = GetAllShopCategoriesMapper.toRequest()
+        val response = this.service.getAllShopCategories(request)
         return ResponseEntity.ok(response)
     }
 
     // === BACKOFFICE PATHS ===
 
     @GetMapping("/backoffice")
-    fun getBackofficeById(
+    fun getBackofficeCategoryById(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String
     ): ResponseEntity<*> {
-        val request = GetCategoryByIdMapper.toRequest(user, id)
-        val response = this.service.getBackofficeById(request)
+        val request = GetBackofficeCategoryByIdMapper.toRequest(user, id)
+        val response = this.service.getBackofficeCategoryById(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/backoffice/catalog")
-    fun getBackofficeCatalog(
+    fun getAllBackofficeCategories(
         @RequestAttribute("authenticatedUser") user: User?
     ): ResponseEntity<*> {
-        val request = GetAllCategoriesMapper.toRequest(user)
-        val response = this.service.getBackofficeCatalog(request)
+        val request = GetAllBackofficeCategoriesMapper.toRequest(user)
+        val response = this.service.getAllBackofficeCategories(request)
         return ResponseEntity.ok(response)
     }
 
     @PostMapping("/backoffice")
-    fun create(
+    fun createCategory(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
-        val request = CreateCategoryMapper.toRequest(user, payload)
-        val response = this.service.create(request)
+        val request = CreateBackofficeCategoryMapper.toRequest(user, payload)
+        val response = this.service.createCategory(request)
         return ResponseEntity.status(201).body(response)
     }
 
     @PutMapping("/backoffice")
-    fun update(
+    fun updateCategory(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String,
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
-        val request = UpdateCategoryMapper.toRequest(user, id, payload)
-        val response = this.service.update(request)
+        val request = UpdateBackofficeCategoryMapper.toRequest(user, id, payload)
+        val response = this.service.updateCategory(request)
         return ResponseEntity.ok(response)
     }
 
     @DeleteMapping("/backoffice")
-    fun delete(
+    fun deleteCategory(
         @RequestAttribute("authenticatedUser") user: User?,
         @RequestParam id: String
     ): ResponseEntity<*> {
-        val request = DeleteCategoryMapper.toRequest(user, id)
-        this.service.delete(request)
+        val request = DeleteBackofficeCategoryMapper.toRequest(user, id)
+        this.service.deleteCategory(request)
         return ResponseEntity.noContent().build<Any>()
     }
 
