@@ -76,9 +76,8 @@ class CategoryService(
     }
 
     override fun getShopCatalog(dto: GetAllCategoriesReq): GetAllCategoriesRes {
-        val result = this.getShopCatalog.execute(
-            command = GetShopCategoriesCatalogUseCase.Command()
-        )
+        // TODO: MODIFY NAME: CATALOG
+        val result = this.getShopCatalog.execute()
 
         return GetAllCategoriesMapper.toResponse(
             categories = result.categories
