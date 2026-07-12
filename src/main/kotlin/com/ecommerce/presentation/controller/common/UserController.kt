@@ -1,4 +1,4 @@
-package com.ecommerce.presentation.controller
+package com.ecommerce.presentation.controller.common
 
 import com.ecommerce.application.service.UserServiceI
 import com.ecommerce.domain.entity.User
