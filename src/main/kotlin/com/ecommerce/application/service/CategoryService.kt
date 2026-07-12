@@ -1,25 +1,9 @@
 package com.ecommerce.application.service
 
 import com.ecommerce.application.use_case.category.*
-import com.ecommerce.presentation.dto.category.mapper.BackofficeCreateCategoryMapper
-import com.ecommerce.presentation.dto.category.mapper.BackofficeGetAllCategoriesMapper
-import com.ecommerce.presentation.dto.category.mapper.BackofficeGetCategoryByIdMapper
-import com.ecommerce.presentation.dto.category.mapper.BackofficeUpdateCategoryMapper
-import com.ecommerce.presentation.dto.category.mapper.ShopGetAllCategoriesMapper
-import com.ecommerce.presentation.dto.category.mapper.ShopGetCategoryByIdMapper
-import com.ecommerce.presentation.dto.category.request.BackofficeCreateCategoryReq
-import com.ecommerce.presentation.dto.category.request.BackofficeDeleteCategoryReq
-import com.ecommerce.presentation.dto.category.request.BackofficeGetAllCategoriesReq
-import com.ecommerce.presentation.dto.category.request.BackofficeGetCategoryByIdReq
-import com.ecommerce.presentation.dto.category.request.BackofficeUpdateCategoryReq
-import com.ecommerce.presentation.dto.category.request.ShopGetAllCategoriesReq
-import com.ecommerce.presentation.dto.category.request.ShopGetCategoryByIdReq
-import com.ecommerce.presentation.dto.category.response.BackofficeCreateCategoryRes
-import com.ecommerce.presentation.dto.category.response.BackofficeGetAllCategoriesRes
-import com.ecommerce.presentation.dto.category.response.BackofficeGetCategoryByIdRes
-import com.ecommerce.presentation.dto.category.response.BackofficeUpdateCategoryRes
-import com.ecommerce.presentation.dto.category.response.ShopGetAllCategoriesRes
-import com.ecommerce.presentation.dto.category.response.ShopGetCategoryByIdRes
+import com.ecommerce.presentation.dto.category.mapper.*
+import com.ecommerce.presentation.dto.category.request.*
+import com.ecommerce.presentation.dto.category.response.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -38,7 +22,7 @@ class CategoryService(
 
 ) : CategoryServiceI {
 
-    override fun createCategory(dto: BackofficeCreateCategoryReq): BackofficeCreateCategoryRes {
+    override fun backofficeCreateCategory(dto: BackofficeCreateCategoryReq): BackofficeCreateCategoryRes {
         val result = this.create.execute(
             command = BackofficeCreateCategoryUseCase.Command(
                 user = dto.user,
@@ -52,7 +36,7 @@ class CategoryService(
         )
     }
 
-    override fun updateCategory(dto: BackofficeUpdateCategoryReq): BackofficeUpdateCategoryRes {
+    override fun backofficeUpdateCategory(dto: BackofficeUpdateCategoryReq): BackofficeUpdateCategoryRes {
         val result = this.update.execute(
             command = BackofficeUpdateCategoryUseCase.Command(
                 user = dto.user,
@@ -67,7 +51,7 @@ class CategoryService(
         )
     }
 
-    override fun deleteCategory(dto: BackofficeDeleteCategoryReq) {
+    override fun backofficeDeleteCategory(dto: BackofficeDeleteCategoryReq) {
         this.delete.execute(
             command = BackofficeDeleteCategoryUseCase.Command(
                 user = dto.user,
@@ -76,7 +60,7 @@ class CategoryService(
         )
     }
 
-    override fun getShopCategoryById(dto: ShopGetCategoryByIdReq): ShopGetCategoryByIdRes {
+    override fun shopGetCategoryById(dto: ShopGetCategoryByIdReq): ShopGetCategoryByIdRes {
         val result = this.getShopById.execute(
             command = ShopGetCategoryByIdUseCase.Command(
                 id = dto.id
@@ -88,7 +72,7 @@ class CategoryService(
         )
     }
 
-    override fun getAllShopCategories(dto: ShopGetAllCategoriesReq): ShopGetAllCategoriesRes {
+    override fun shopGetAllCategories(dto: ShopGetAllCategoriesReq): ShopGetAllCategoriesRes {
         val result = this.getShopCatalog.execute()
 
         return ShopGetAllCategoriesMapper.toResponse(
@@ -96,7 +80,7 @@ class CategoryService(
         )
     }
 
-    override fun getBackofficeCategoryById(dto: BackofficeGetCategoryByIdReq): BackofficeGetCategoryByIdRes {
+    override fun backofficeGetCategoryById(dto: BackofficeGetCategoryByIdReq): BackofficeGetCategoryByIdRes {
         val result = this.getBackofficeById.execute(
             command = BackofficeGetCategoryByIdUseCase.Command(
                 user = dto.user,
@@ -109,7 +93,7 @@ class CategoryService(
         )
     }
 
-    override fun getAllBackofficeCategories(dto: BackofficeGetAllCategoriesReq): BackofficeGetAllCategoriesRes {
+    override fun backofficeGetAllCategories(dto: BackofficeGetAllCategoriesReq): BackofficeGetAllCategoriesRes {
         val result = this.getBackofficeCatalog.execute(
             command = BackofficeGetAllCategoriesUseCase.Command(
                 user = dto.user

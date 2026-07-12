@@ -13,18 +13,18 @@ class ShopCategoryController(
 ) {
 
     @GetMapping
-    fun getShopCategoryById(
+    fun shopGetCategoryById(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = ShopGetCategoryByIdMapper.toRequest(id)
-        val response = service.getShopCategoryById(request)
+        val response = service.shopGetCategoryById(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/catalog")
-    fun getAllShopCategories(): ResponseEntity<*> {
+    fun shopGetAllCategories(): ResponseEntity<*> {
         val request = ShopGetAllCategoriesMapper.toRequest()
-        val response = service.getAllShopCategories(request)
+        val response = service.shopGetAllCategories(request)
         return ResponseEntity.ok(response)
     }
 }

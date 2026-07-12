@@ -1,24 +1,9 @@
 package com.ecommerce.application.service
 
 import com.ecommerce.application.use_case.product.*
-import com.ecommerce.presentation.dto.product.mapper.BackofficeCreateProductMapper
-import com.ecommerce.presentation.dto.product.mapper.BackofficeGetProductByIdMapper
-import com.ecommerce.presentation.dto.product.mapper.BackofficeUpdateProductMapper
-import com.ecommerce.presentation.dto.product.mapper.ShopGetAllProductsMapper
-import com.ecommerce.presentation.dto.product.mapper.ShopGetProductByIdMapper
-import com.ecommerce.presentation.dto.product.request.BackofficeCreateProductReq
-import com.ecommerce.presentation.dto.product.request.BackofficeDeleteProductReq
-import com.ecommerce.presentation.dto.product.request.BackofficeGetAllProductsReq
-import com.ecommerce.presentation.dto.product.request.BackofficeGetProductByIdReq
-import com.ecommerce.presentation.dto.product.request.BackofficeUpdateProductReq
-import com.ecommerce.presentation.dto.product.request.ShopGetAllProductsReq
-import com.ecommerce.presentation.dto.product.request.ShopGetProductByIdReq
-import com.ecommerce.presentation.dto.product.response.BackofficeCreateProductRes
-import com.ecommerce.presentation.dto.product.response.BackofficeGetAllProductsRes
-import com.ecommerce.presentation.dto.product.response.BackofficeGetProductByIdRes
-import com.ecommerce.presentation.dto.product.response.BackofficeUpdateProductRes
-import com.ecommerce.presentation.dto.product.response.ShopGetAllProductsRes
-import com.ecommerce.presentation.dto.product.response.ShopGetProductByIdRes
+import com.ecommerce.presentation.dto.product.mapper.*
+import com.ecommerce.presentation.dto.product.request.*
+import com.ecommerce.presentation.dto.product.response.*
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -37,7 +22,7 @@ class ProductService(
 
 ) : ProductServiceI {
 
-    override fun createProduct(dto: BackofficeCreateProductReq): BackofficeCreateProductRes {
+    override fun backofficeCreateProduct(dto: BackofficeCreateProductReq): BackofficeCreateProductRes {
         val result = create.execute(
             command = BackofficeCreateProductUseCase.Command(
                 user = dto.user,
@@ -58,7 +43,7 @@ class ProductService(
         )
     }
 
-    override fun updateProduct(dto: BackofficeUpdateProductReq): BackofficeUpdateProductRes {
+    override fun backofficeUpdateProduct(dto: BackofficeUpdateProductReq): BackofficeUpdateProductRes {
         val result = update.execute(
             command = BackofficeUpdateProductUseCase.Command(
                 user = dto.user,
@@ -80,7 +65,7 @@ class ProductService(
         )
     }
 
-    override fun deleteProduct(dto: BackofficeDeleteProductReq) {
+    override fun backofficeDeleteProduct(dto: BackofficeDeleteProductReq) {
         this.delete.execute(
             command = BackofficeDeleteProductUseCase.Command(
                 user = dto.user,
@@ -89,7 +74,7 @@ class ProductService(
         )
     }
 
-    override fun getShopProductById(dto: ShopGetProductByIdReq): ShopGetProductByIdRes {
+    override fun shopGetProductById(dto: ShopGetProductByIdReq): ShopGetProductByIdRes {
         val result = this.getShopById.execute(
             command = ShopGetProductByIdUseCase.Command(
                 id = dto.id
@@ -101,7 +86,7 @@ class ProductService(
         )
     }
 
-    override fun getAllShopProducts(dto: ShopGetAllProductsReq): ShopGetAllProductsRes {
+    override fun shopGetAllProducts(dto: ShopGetAllProductsReq): ShopGetAllProductsRes {
         val result = this.getShopCatalog.execute(
             command = ShopGetAllProductsUseCase.Command(
                 filters = dto.filters
@@ -113,7 +98,7 @@ class ProductService(
         )
     }
 
-    override fun getBackofficeProductById(dto: BackofficeGetProductByIdReq): BackofficeGetProductByIdRes {
+    override fun backofficeGetProductById(dto: BackofficeGetProductByIdReq): BackofficeGetProductByIdRes {
         val result = this.getBackofficeById.execute(
             command = BackofficeGetProductByIdUseCase.Command(
                 user = dto.user,
@@ -126,7 +111,7 @@ class ProductService(
         )
     }
 
-    override fun getAllBackofficeProducts(dto: BackofficeGetAllProductsReq): BackofficeGetAllProductsRes {
+    override fun backofficeGetAllProducts(dto: BackofficeGetAllProductsReq): BackofficeGetAllProductsRes {
         val result = this.getBackofficeCatalog.execute(
             command = BackofficeGetAllProductsUseCase.Command(
                 user = dto.user,
@@ -134,7 +119,7 @@ class ProductService(
             )
         )
 
-        return BackofficeGetAllProductsRes(
+        return BackofficeGetAllProductsMapper.toResponse(
             products = result.products
         )
     }

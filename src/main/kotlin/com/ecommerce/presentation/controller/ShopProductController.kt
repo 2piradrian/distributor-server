@@ -13,23 +13,23 @@ class ShopProductController(
 ) {
 
     @GetMapping
-    fun getShopProductById(
+    fun shopGetProductById(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = ShopGetProductByIdMapper.toRequest(id)
-        val response = service.getShopProductById(request)
+        val response = service.shopGetProductById(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/catalog")
-    fun getAllShopProducts(
+    fun shopGetAllProducts(
         @RequestParam(required = false) categoryId: String?,
         @RequestParam(required = false) name: String?,
         @RequestParam(required = false) minPrice: Double?,
         @RequestParam(required = false) maxPrice: Double?
     ): ResponseEntity<*> {
         val request = ShopGetAllProductsMapper.toRequest(categoryId, name, minPrice, maxPrice)
-        val response = service.getAllShopProducts(request)
+        val response = service.shopGetAllProducts(request)
         return ResponseEntity.ok(response)
     }
 }
