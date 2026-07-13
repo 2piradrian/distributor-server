@@ -24,7 +24,7 @@ class UserController(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = GetUserByIdMapper.toRequest(user, id)
-        val response = service.getById(request)
+        val response = this.service.getById(request)
         return ResponseEntity.ok(response)
     }
 
@@ -33,7 +33,7 @@ class UserController(
         @RequestAttribute("authenticatedUser") user: User?
     ): ResponseEntity<*> {
         val request = GetAllUserMapper.toRequest(user)
-        val response = service.getAllUsers(request)
+        val response = this.service.getAllUsers(request)
         return ResponseEntity.ok(response)
     }
 
@@ -42,7 +42,7 @@ class UserController(
         @RequestAttribute("authenticatedUser") user: User?
     ): ResponseEntity<*> {
         val request = AuthUserMapper.toRequest(user)
-        val response = service.auth(request)
+        val response = this.service.auth(request)
         return ResponseEntity.ok(response)
     }
 
@@ -52,7 +52,7 @@ class UserController(
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = CreateUserMapper.toRequest(user, payload)
-        val response = service.create(request)
+        val response = this.service.create(request)
         return ResponseEntity.status(201).body(response)
     }
 
@@ -63,7 +63,7 @@ class UserController(
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = UpdateUserMapper.toRequest(user, id, payload)
-        val response = service.update(request)
+        val response = this.service.update(request)
         return ResponseEntity.ok(response)
     }
 
@@ -72,7 +72,7 @@ class UserController(
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = CreateAdminUserMapper.toRequest(payload)
-        val response = service.createAdmin(request)
+        val response = this.service.createAdmin(request)
         return ResponseEntity.status(201).body(response)
     }
 
@@ -81,7 +81,7 @@ class UserController(
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = LoginUserMapper.toRequest(payload)
-        val response = service.login(request)
+        val response = this.service.login(request)
         return ResponseEntity.ok(response)
     }
 }

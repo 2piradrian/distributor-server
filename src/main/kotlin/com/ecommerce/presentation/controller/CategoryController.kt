@@ -18,7 +18,7 @@ class CategoryController(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = GetCategoryByIdMapper.toRequest(user, id)
-        val response = service.getCategoryById(request)
+        val response = this.service.getCategoryById(request)
         return ResponseEntity.ok(response)
     }
 
@@ -27,7 +27,7 @@ class CategoryController(
         @RequestAttribute("authenticatedUser") user: User?
     ): ResponseEntity<*> {
         val request = GetAllCategoriesMapper.toRequest(user)
-        val response = service.getAllCategories(request)
+        val response = this.service.getAllCategories(request)
         return ResponseEntity.ok(response)
     }
 
@@ -37,7 +37,7 @@ class CategoryController(
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = CreateCategoryMapper.toRequest(user, payload)
-        val response = service.createCategory(request)
+        val response = this.service.createCategory(request)
         return ResponseEntity.status(201).body(response)
     }
 
@@ -48,7 +48,7 @@ class CategoryController(
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = UpdateCategoryMapper.toRequest(user, id, payload)
-        val response = service.updateCategory(request)
+        val response = this.service.updateCategory(request)
         return ResponseEntity.ok(response)
     }
 
@@ -58,7 +58,7 @@ class CategoryController(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = DeleteCategoryMapper.toRequest(user, id)
-        service.deleteCategory(request)
+        this.service.deleteCategory(request)
         return ResponseEntity.noContent().build<Any>()
     }
 }

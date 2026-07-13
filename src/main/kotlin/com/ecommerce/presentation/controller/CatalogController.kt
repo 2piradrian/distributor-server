@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/catalog")
 class CatalogController(
-    private val catalogService: CatalogServiceI
+    private val service: CatalogServiceI
 ) {
 
     @GetMapping("/products")
@@ -22,7 +22,7 @@ class CatalogController(
         @RequestParam(required = false) maxPrice: Double?
     ): ResponseEntity<*> {
         val request = GetProductCatalogMapper.toRequest(categoryId, name, minPrice, maxPrice)
-        val response = catalogService.getProductCatalog(request)
+        val response = this.service.getProductCatalog(request)
         return ResponseEntity.ok(response)
     }
 
@@ -31,14 +31,14 @@ class CatalogController(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = GetProductCatalogByIdMapper.toRequest(id)
-        val response = catalogService.getProductCatalogById(request)
+        val response = this.service.getProductCatalogById(request)
         return ResponseEntity.ok(response)
     }
 
     @GetMapping("/categories")
     fun getCategoryCatalog(): ResponseEntity<*> {
         val request = GetCategoryCatalogMapper.toRequest()
-        val response = catalogService.getCategoryCatalog(request)
+        val response = this.service.getCategoryCatalog(request)
         return ResponseEntity.ok(response)
     }
 
@@ -47,7 +47,7 @@ class CatalogController(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = GetCategoryCatalogByIdMapper.toRequest(id)
-        val response = catalogService.getCategoryCatalogById(request)
+        val response = this.service.getCategoryCatalogById(request)
         return ResponseEntity.ok(response)
     }
 }

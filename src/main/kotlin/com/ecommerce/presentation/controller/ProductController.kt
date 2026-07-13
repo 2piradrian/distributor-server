@@ -18,7 +18,7 @@ class ProductController(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = GetProductByIdMapper.toRequest(user, id)
-        val response = service.getProductById(request)
+        val response = this.service.getProductById(request)
         return ResponseEntity.ok(response)
     }
 
@@ -31,7 +31,7 @@ class ProductController(
         @RequestParam(required = false) maxPrice: Double?
     ): ResponseEntity<*> {
         val request = GetAllProductsMapper.toRequest(user, categoryId, name, minPrice, maxPrice)
-        val response = service.getAllProducts(request)
+        val response = this.service.getAllProducts(request)
         return ResponseEntity.ok(response)
     }
 
@@ -41,7 +41,7 @@ class ProductController(
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = CreateProductMapper.toRequest(user, payload)
-        val response = service.createProduct(request)
+        val response = this.service.createProduct(request)
         return ResponseEntity.status(201).body(response)
     }
 
@@ -52,7 +52,7 @@ class ProductController(
         @RequestBody payload: Map<String, Any>
     ): ResponseEntity<*> {
         val request = UpdateProductMapper.toRequest(user, id, payload)
-        val response = service.updateProduct(request)
+        val response = this.service.updateProduct(request)
         return ResponseEntity.ok(response)
     }
 
@@ -62,7 +62,7 @@ class ProductController(
         @RequestParam id: String
     ): ResponseEntity<*> {
         val request = DeleteProductMapper.toRequest(user, id)
-        service.deleteProduct(request)
+        this.service.deleteProduct(request)
         return ResponseEntity.noContent().build<Any>()
     }
 }

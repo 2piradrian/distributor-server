@@ -3,7 +3,7 @@ package com.ecommerce.presentation.dto.catalog.mapper
 import com.ecommerce.presentation.dto.catalog.request.GetProductCatalogReq
 import com.ecommerce.presentation.dto.catalog.response.GetProductCatalogRes
 import com.ecommerce.domain.entity.Product
-import com.ecommerce.presentation.dto.product.request.ProductFilters
+import com.ecommerce.domain.filters.ProductFilters
 
 object GetProductCatalogMapper {
 
