@@ -1,28 +1,22 @@
 package com.ecommerce.application.service
 
-import com.ecommerce.presentation.dto.product.request.ShopGetAllProductsReq
-import com.ecommerce.presentation.dto.product.request.ShopGetProductByIdReq
-import com.ecommerce.presentation.dto.product.response.ShopGetAllProductsRes
-import com.ecommerce.presentation.dto.product.response.ShopGetProductByIdRes
-import com.ecommerce.presentation.dto.product.request.BackofficeCreateProductReq
-import com.ecommerce.presentation.dto.product.request.BackofficeUpdateProductReq
-import com.ecommerce.presentation.dto.product.request.BackofficeDeleteProductReq
-import com.ecommerce.presentation.dto.product.request.BackofficeGetAllProductsReq
-import com.ecommerce.presentation.dto.product.request.BackofficeGetProductByIdReq
-import com.ecommerce.presentation.dto.product.response.BackofficeCreateProductRes
-import com.ecommerce.presentation.dto.product.response.BackofficeUpdateProductRes
-import com.ecommerce.presentation.dto.product.response.BackofficeGetAllProductsRes
-import com.ecommerce.presentation.dto.product.response.BackofficeGetProductByIdRes
+import com.ecommerce.presentation.dto.product.request.CreateProductReq
+import com.ecommerce.presentation.dto.product.request.UpdateProductReq
+import com.ecommerce.presentation.dto.product.request.DeleteProductReq
+import com.ecommerce.presentation.dto.product.request.GetAllProductsReq
+import com.ecommerce.presentation.dto.product.request.GetProductByIdReq
+import com.ecommerce.presentation.dto.product.response.CreateProductRes
+import com.ecommerce.presentation.dto.product.response.UpdateProductRes
+import com.ecommerce.presentation.dto.product.response.GetAllProductsRes
+import com.ecommerce.presentation.dto.product.response.GetProductByIdRes
 import jakarta.validation.Valid
 import org.springframework.validation.annotation.Validated
 
 @Validated
 interface ProductServiceI {
-    fun backofficeCreateProduct(@Valid dto: BackofficeCreateProductReq): BackofficeCreateProductRes
-    fun backofficeUpdateProduct(@Valid dto: BackofficeUpdateProductReq): BackofficeUpdateProductRes
-    fun backofficeDeleteProduct(@Valid dto: BackofficeDeleteProductReq)
-    fun shopGetProductById(@Valid dto: ShopGetProductByIdReq): ShopGetProductByIdRes
-    fun shopGetAllProducts(@Valid dto: ShopGetAllProductsReq): ShopGetAllProductsRes
-    fun backofficeGetProductById(@Valid dto: BackofficeGetProductByIdReq): BackofficeGetProductByIdRes
-    fun backofficeGetAllProducts(@Valid dto: BackofficeGetAllProductsReq): BackofficeGetAllProductsRes
+    fun createProduct(@Valid dto: CreateProductReq): CreateProductRes
+    fun updateProduct(@Valid dto: UpdateProductReq): UpdateProductRes
+    fun deleteProduct(@Valid dto: DeleteProductReq)
+    fun getProductById(@Valid dto: GetProductByIdReq): GetProductByIdRes
+    fun getAllProducts(@Valid dto: GetAllProductsReq): GetAllProductsRes
 }

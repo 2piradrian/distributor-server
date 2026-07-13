@@ -1,28 +1,22 @@
 package com.ecommerce.application.service
 
-import com.ecommerce.presentation.dto.category.request.ShopGetAllCategoriesReq
-import com.ecommerce.presentation.dto.category.request.ShopGetCategoryByIdReq
-import com.ecommerce.presentation.dto.category.response.ShopGetAllCategoriesRes
-import com.ecommerce.presentation.dto.category.response.ShopGetCategoryByIdRes
-import com.ecommerce.presentation.dto.category.request.BackofficeCreateCategoryReq
-import com.ecommerce.presentation.dto.category.request.BackofficeUpdateCategoryReq
-import com.ecommerce.presentation.dto.category.request.BackofficeDeleteCategoryReq
-import com.ecommerce.presentation.dto.category.request.BackofficeGetAllCategoriesReq
-import com.ecommerce.presentation.dto.category.request.BackofficeGetCategoryByIdReq
-import com.ecommerce.presentation.dto.category.response.BackofficeCreateCategoryRes
-import com.ecommerce.presentation.dto.category.response.BackofficeUpdateCategoryRes
-import com.ecommerce.presentation.dto.category.response.BackofficeGetAllCategoriesRes
-import com.ecommerce.presentation.dto.category.response.BackofficeGetCategoryByIdRes
+import com.ecommerce.presentation.dto.category.request.CreateCategoryReq
+import com.ecommerce.presentation.dto.category.request.UpdateCategoryReq
+import com.ecommerce.presentation.dto.category.request.DeleteCategoryReq
+import com.ecommerce.presentation.dto.category.request.GetAllCategoriesReq
+import com.ecommerce.presentation.dto.category.request.GetCategoryByIdReq
+import com.ecommerce.presentation.dto.category.response.CreateCategoryRes
+import com.ecommerce.presentation.dto.category.response.UpdateCategoryRes
+import com.ecommerce.presentation.dto.category.response.GetAllCategoriesRes
+import com.ecommerce.presentation.dto.category.response.GetCategoryByIdRes
 import jakarta.validation.Valid
 import org.springframework.validation.annotation.Validated
 
 @Validated
 interface CategoryServiceI {
-    fun backofficeCreateCategory(@Valid dto: BackofficeCreateCategoryReq): BackofficeCreateCategoryRes
-    fun backofficeUpdateCategory(@Valid dto: BackofficeUpdateCategoryReq): BackofficeUpdateCategoryRes
-    fun backofficeDeleteCategory(@Valid dto: BackofficeDeleteCategoryReq)
-    fun shopGetCategoryById(@Valid dto: ShopGetCategoryByIdReq): ShopGetCategoryByIdRes
-    fun shopGetAllCategories(@Valid dto: ShopGetAllCategoriesReq): ShopGetAllCategoriesRes
-    fun backofficeGetCategoryById(@Valid dto: BackofficeGetCategoryByIdReq): BackofficeGetCategoryByIdRes
-    fun backofficeGetAllCategories(@Valid dto: BackofficeGetAllCategoriesReq): BackofficeGetAllCategoriesRes
+    fun createCategory(@Valid dto: CreateCategoryReq): CreateCategoryRes
+    fun updateCategory(@Valid dto: UpdateCategoryReq): UpdateCategoryRes
+    fun deleteCategory(@Valid dto: DeleteCategoryReq)
+    fun getCategoryById(@Valid dto: GetCategoryByIdReq): GetCategoryByIdRes
+    fun getAllCategories(@Valid dto: GetAllCategoriesReq): GetAllCategoriesRes
 }
