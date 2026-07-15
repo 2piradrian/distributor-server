@@ -28,10 +28,8 @@ import com.ecommerce.presentation.dto.user.response.GetUserByIdRes
 import com.ecommerce.presentation.dto.user.response.LoginUserRes
 import com.ecommerce.presentation.dto.user.response.UpdateUserRes
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class UserService(
     private val getById: GetUserByIdUseCase,
     private val getAll: GetAllUsersUseCase,

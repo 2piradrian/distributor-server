@@ -5,10 +5,8 @@ import com.ecommerce.presentation.dto.catalog.mapper.*
 import com.ecommerce.presentation.dto.catalog.request.*
 import com.ecommerce.presentation.dto.catalog.response.*
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class CatalogService(
     private val getProductCatalog: GetProductCatalogUseCase,
     private val getProductCatalogById: GetProductCatalogByIdUseCase,

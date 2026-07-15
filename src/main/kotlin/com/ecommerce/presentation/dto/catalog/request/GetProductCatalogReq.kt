@@ -1,6 +1,6 @@
 package com.ecommerce.presentation.dto.catalog.request
 
-import com.ecommerce.presentation.dto.product.request.ProductFilters
+import com.ecommerce.domain.filters.ProductFilters
 
 data class GetProductCatalogReq(
     val filters: ProductFilters

@@ -5,10 +5,8 @@ import com.ecommerce.presentation.dto.product.mapper.*
 import com.ecommerce.presentation.dto.product.request.*
 import com.ecommerce.presentation.dto.product.response.*
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class ProductService(
     private val create: CreateProductUseCase,
     private val update: UpdateProductUseCase,

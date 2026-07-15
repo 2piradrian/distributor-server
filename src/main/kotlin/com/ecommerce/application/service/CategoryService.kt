@@ -5,10 +5,8 @@ import com.ecommerce.presentation.dto.category.mapper.*
 import com.ecommerce.presentation.dto.category.request.*
 import com.ecommerce.presentation.dto.category.response.*
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class CategoryService(
     private val create: CreateCategoryUseCase,
     private val update: UpdateCategoryUseCase,
