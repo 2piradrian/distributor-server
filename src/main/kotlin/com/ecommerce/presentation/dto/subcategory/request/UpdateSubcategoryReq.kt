@@ -1,11 +1,10 @@
-package com.ecommerce.presentation.dto.category.request
+package com.ecommerce.presentation.dto.subcategory.request
 
 import com.ecommerce.domain.entity.User
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 
-data class UpdateCategoryReq(
-
+data class UpdateSubcategoryReq(
     val user: User?,
 
     @field:NotBlank
@@ -16,6 +15,8 @@ data class UpdateCategoryReq(
 
     @field:NotBlank
     @field:Pattern(regexp = "^[a-z0-9]+(?:-[a-z0-9]+)*$")
-    val slug: String?
+    val slug: String?,
 
+    @field:NotBlank
+    val categoryId: String?
 )

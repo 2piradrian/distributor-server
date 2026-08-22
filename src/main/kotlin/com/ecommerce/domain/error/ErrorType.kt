@@ -12,10 +12,12 @@ enum class ErrorType(val message: String, val httpCode: Int) {
 
     PRODUCT_ALREADY_EXISTS("Product already exists", 400),
     CATEGORY_ALREADY_EXISTS("Category already exists", 400),
+    SUBCATEGORY_ALREADY_EXISTS("Subcategory already exists", 400),
     USERNAME_ALREADY_EXISTS("Username already exists", 400),
 
     USER_NOT_FOUND("User not found", 404),
     CATEGORY_NOT_FOUND("Category not found", 404),
+    SUBCATEGORY_NOT_FOUND("Subcategory not found", 404),
     PRODUCT_NOT_FOUND("Product not found", 404),
 
     INTERNAL_ERROR("Internal error", 500),

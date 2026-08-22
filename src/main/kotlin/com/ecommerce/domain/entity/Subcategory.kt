@@ -2,11 +2,10 @@ package com.ecommerce.domain.entity
 
 import java.util.Date
 
-class Category(
+class Subcategory(
     val id: String?,
     var name: String,
     var slug: String,
-    var subcategories: List<Subcategory> = emptyList(),
     val createdAt: Date?,
     var updatedAt: Date?
 ) {

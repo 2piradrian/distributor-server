@@ -4,8 +4,8 @@ import jakarta.persistence.*
 import java.util.Date
 
 @Entity
-@Table(name = "categories")
-class CategoryModel {
+@Table(name = "subcategories")
+class SubcategoryModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,8 +23,4 @@ class CategoryModel {
 
     @Column(nullable = false)
     var updatedAt: Date = Date()
-
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    var subcategories: List<SubcategoryModel> = mutableListOf()
 }
