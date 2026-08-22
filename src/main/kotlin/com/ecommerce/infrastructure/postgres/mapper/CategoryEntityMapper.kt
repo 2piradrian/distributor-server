@@ -33,7 +33,7 @@ object CategoryEntityMapper {
                 id = it.getId(),
                 name = it.getName(),
                 slug = it.getSlug(),
-                subcategories = SubcategoryEntityMapper.toDomain(it.getSubcategories()),
+                subcategories = SubcategoryEntityMapper.toDomain(it.getSubcategories(), SubcategoryEntityMapper::toDomain),
                 createdAt = it.getCreatedAt(),
                 updatedAt = it.getUpdatedAt()
             )
@@ -59,7 +59,7 @@ object CategoryEntityMapper {
                 id = it.getId(),
                 name = it.getName(),
                 slug = it.getSlug(),
-                subcategories = SubcategoryEntityMapper.toDomain(it.getSubcategories()),
+                subcategories = SubcategoryEntityMapper.toDomain(it.getSubcategories(), SubcategoryEntityMapper::toDomain),
                 createdAt = it.getCreatedAt(),
                 updatedAt = it.getUpdatedAt()
             )
