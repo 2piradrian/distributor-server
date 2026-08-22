@@ -29,7 +29,7 @@ class GetAllCategoriesUseCase(
             it.validatePermissions(Role.ADMIN, Role.LOGISTICA, Role.COMERCIAL)
         } ?: throw ErrorHandler(ErrorType.UNAUTHORIZED)
 
-        val categories = categoryRepository.getAllBasic()
+        val categories = categoryRepository.getAll()
         return Result(categories = categories)
     }
 }
